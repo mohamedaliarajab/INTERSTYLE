@@ -1,0 +1,172 @@
+/* ==========================================================================
+   INTERSTYLE — Base: reset, document, shared primitives
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--surface-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+/* Visible focus only for keyboard users, never swallowed by custom styling. */
+:focus-visible {
+  outline: 2px solid var(--is-orange);
+  outline-offset: 4px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Shared type primitives
+   -------------------------------------------------------------------------- */
+
+.tagline {
+  margin: 0;
+  font-size: clamp(0.625rem, 0.34vw + 0.51rem, 0.75rem);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: var(--tracking-tagline);
+  text-indent: var(--tracking-tagline);   /* re-centres letter-spaced text */
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+
+/* --------------------------------------------------------------------------
+   Enter button — shared shell, per-brand accent supplied by the panel
+   -------------------------------------------------------------------------- */
+
+.enter {
+  --enter-accent: var(--is-orange);
+  --enter-ink:    var(--is-white);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
+  isolation: isolate;
+  padding: 1.05em 2.1em;
+  border: 1px solid var(--line-button);
+  background: transparent;
+  font: inherit;
+  font-size: clamp(0.5625rem, 0.24vw + 0.52rem, 0.6875rem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-action);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    color       var(--dur-fast) var(--ease-inout),
+    border-color var(--dur-fast) var(--ease-inout);
+}
+
+/* The accent sweep. Wipes in from the left, out to the right. */
+.enter::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--enter-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-base) var(--ease-brand);
+}
+
+.enter__label { display: block; text-indent: var(--tracking-action); }
+
+.enter__arrow {
+  display: block;
+  width: 1.45em;
+  height: auto;
+  overflow: visible;
+  transition: transform var(--dur-base) var(--ease-brand);
+}
+.enter__arrow line,
+.enter__arrow polyline {
+  stroke: currentColor;
+  stroke-width: 1;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .enter:hover {
+    color: var(--enter-ink);
+    border-color: var(--enter-accent);
+  }
+  .enter:hover::before { transform: scaleX(1); }
+  .enter:hover .enter__arrow { transform: translateX(0.3em); }
+}
+
+.enter:focus-visible {
+  color: var(--enter-ink);
+  border-color: var(--enter-accent);
+}
+.enter:focus-visible::before { transform: scaleX(1); }
+
+.enter:active { transform: translateY(1px); }
+
+/* Touch targets: 44px is the accessibility floor on both iOS and WCAG.
+   The type stays small, the hit area does not. */
+@media (pointer: coarse) {
+  .enter { min-height: 44px; padding: 1.1em 2.2em; }
+}
+
+/* --------------------------------------------------------------------------
+   Entrance reveal — shared by the landing and the brand pages
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  animation: reveal-up 1.05s var(--ease-brand) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(0.875rem); filter: blur(6px); }
+  to   { opacity: 1; transform: none;                 filter: blur(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — keep every state change, drop the travel
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

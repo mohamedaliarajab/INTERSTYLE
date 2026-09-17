@@ -1,0 +1,92 @@
+/* ==========================================================================
+   INTERSTYLE — Design tokens
+   Sourced from "Interstyle Brandstyle Guideline 21" (07 Colour / 06 Typography)
+   ========================================================================== */
+
+:root {
+  /* --- Brand palette (exact guideline values) ------------------------------ */
+  --is-black:  #101820;   /* R16  G24  B32   — primary, cool black          */
+  --is-grey:   #898A8D;   /* R137 G138 B141  — neutral, digital legibility  */
+  --is-orange: #FF5F00;   /* R255 G95  B0    — call to action               */
+  --is-white:  #FFFFFF;
+
+  /* --- Derived surfaces ---------------------------------------------------- */
+  --surface-paper: var(--is-white);           /* Interstyle panel           */
+  --surface-stone: #ECECEB;                   /* Interstyle Home panel      */
+  --surface-ink:   var(--is-black);
+
+  /* --- Hairlines & textures ------------------------------------------------ */
+  --line-grid:    rgba(16, 24, 32, 0.055);
+  --line-accent:  rgba(16, 24, 32, 0.085);
+  --line-weave:   rgba(16, 24, 32, 0.032);
+  --line-divider: rgba(16, 24, 32, 0.10);
+  --line-button:  rgba(16, 24, 32, 0.20);
+
+  /* --- Text ---------------------------------------------------------------- */
+  --text-primary:   var(--is-black);
+  --text-secondary: #6F7276;
+  --text-tertiary:  #B4B5B7;
+
+  /* --- Typography (guideline 06: Montserrat is the digital-media face) ------ */
+  --font-brand: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --tracking-tagline: 0.26em;
+  --tracking-meta:    0.10em;
+  --tracking-action:  0.22em;
+
+  /* --- Motion -------------------------------------------------------------- */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);   /* calm, expensive decel   */
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:   240ms;
+  --dur-base:   520ms;
+  --dur-slow:   900ms;
+  --dur-exit:   760ms;
+
+  /* --- Layout -------------------------------------------------------------- */
+  --panel-rest:   50%;
+  --panel-hover:  53.5%;
+  --panel-quiet:  46.5%;
+}
+
+/* Phone screens render these hairlines at full strength rather than
+   downsampled, so they need a lighter value to read the same. */
+@media (max-width: 860px) {
+  :root {
+    --line-grid:  rgba(16, 24, 32, 0.042);
+    --line-weave: rgba(16, 24, 32, 0.026);
+  }
+}
+
+/* ==========================================================================
+   Page-level surfaces derived from the four brand colours.
+   Every value below resolves to #101820 / #898A8D / #FF5F00 / #FFFFFF or a
+   tint of them — nothing is invented outside the guideline palette.
+   ========================================================================== */
+
+:root {
+  --ink:        var(--is-black);                 /* body copy            */
+  --muted:      #6F7276;                         /* secondary copy       */
+  --cream:      #F7F7F6;                         /* alternating band     */
+  --stone:      var(--surface-stone);            /* hairline grid bg     */
+  --stone-dark: #C9CACB;                         /* borders on light     */
+
+  --accent:      var(--is-orange);
+  --accent-deep: #D94F00;                        /* orange, pressed      */
+  --accent-wash: rgba(255, 95, 0, 0.06);
+
+  /* Every dark fill resolves through this, so a page can retheme it. */
+  --surface-dark:       var(--is-black);
+  --surface-dark-raise: #16202A;                 /* hover on a dark card */
+
+  --on-dark-1: rgba(255, 255, 255, 0.92);
+  --on-dark-2: rgba(255, 255, 255, 0.50);
+  --on-dark-3: rgba(255, 255, 255, 0.32);
+  --on-dark-line: rgba(255, 255, 255, 0.10);
+
+  /* Display face for headlines; Montserrat (guideline 06) carries all UI. */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+  --gutter:    clamp(1.25rem, 5vw, 5rem);
+  --section-y: clamp(4rem, 9vh, 6rem);
+  --nav-h:     clamp(4rem, 7vw, 5.25rem);
+}

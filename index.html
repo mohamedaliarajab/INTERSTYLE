@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Interstyle — Design. Construct. Innovate.</title>
+  <meta name="description" content="Interstyle: tiles, sanitaryware and fixtures across Nigeria, Ghana and Senegal. Interstyle Home: outdoor, indoor, doors and soft furnishing.">
+  <meta name="theme-color" content="#101820">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Interstyle — Design. Construct. Innovate.">
+  <meta property="og:description" content="Choose your path: Interstyle, or Interstyle Home.">
+
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="/assets/img/interstyle-logo.png">
+  <link rel="preload" as="image" href="/assets/img/interstyle-home-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=260dbcfd">
+  <link rel="stylesheet" href="/assets/css/base.css?v=59474aff">
+  <link rel="stylesheet" href="/assets/css/landing.css?v=7b47ef3a">
+  <link rel="stylesheet" href="/assets/css/preloader.css?v=60bbb9bf">
+
+  <!-- Switch the preloader on before first paint, but only where JS runs, so
+       a visitor without JavaScript is never locked behind a static overlay. -->
+  <script>document.documentElement.classList.add('is-preloading');</script>
+</head>
+
+<body>
+
+  <!-- ============================== PRELOADER ============================= -->
+  <div class="preloader" data-preloader role="status" aria-live="polite" aria-label="Loading Interstyle">
+    <div class="preloader__inner">
+      <div class="preloader__mark">
+        <div class="preloader__pixels" data-preloader-pixels></div>
+      </div>
+      <div class="preloader__pct"><span data-preloader-pct>0</span><sup>%</sup></div>
+    </div>
+  </div>
+
+  <h1 class="visually-hidden">Interstyle — choose Interstyle or Interstyle Home</h1>
+
+  <main class="split" data-split>
+
+    <!-- ============================ INTERSTYLE ============================ -->
+    <section class="panel panel--interstyle" data-panel="interstyle" aria-labelledby="interstyle-tagline">
+      <div class="panel__texture" aria-hidden="true"></div>
+      <div class="panel__texture panel__texture--boost" aria-hidden="true"></div>
+
+      <div class="panel__drift"><div class="panel__content">
+        <img
+          class="panel__logo reveal"
+          style="--reveal-delay: 250ms"
+          src="/assets/img/interstyle-logo.png"
+          width="3000" height="448"
+          alt="Interstyle"
+          fetchpriority="high">
+
+        <p class="tagline panel__tagline reveal" id="interstyle-tagline" style="--reveal-delay: 380ms">
+          Design. Construct. Innovate
+        </p>
+
+        <div class="panel__action reveal" style="--reveal-delay: 470ms">
+          <a class="enter" href="/interstyle/" data-enter>
+            <span class="enter__label">Enter</span>
+            <svg class="enter__arrow" viewBox="0 0 26 8" aria-hidden="true" focusable="false">
+              <line x1="0" y1="4" x2="24" y2="4" />
+              <polyline points="20.5,0.5 24,4 20.5,7.5" />
+            </svg>
+            <span class="visually-hidden">Interstyle — tiles, sanitaryware and fixtures</span>
+          </a>
+        </div>
+      </div></div>
+    </section>
+
+    <!-- ========================= INTERSTYLE HOME ========================== -->
+    <section class="panel panel--home" data-panel="home" aria-labelledby="home-tagline">
+      <div class="panel__texture" aria-hidden="true"></div>
+      <div class="panel__texture panel__texture--boost" aria-hidden="true"></div>
+
+      <div class="panel__drift"><div class="panel__content">
+        <img
+          class="panel__logo reveal"
+          style="--reveal-delay: 320ms"
+          src="/assets/img/interstyle-home-logo.png"
+          width="1234" height="540"
+          alt="Interstyle Home"
+          fetchpriority="high">
+
+        <p class="tagline panel__tagline reveal" id="home-tagline" style="--reveal-delay: 450ms">
+          Home. Garden. Living
+        </p>
+
+        <div class="panel__action reveal" style="--reveal-delay: 540ms">
+          <a class="enter" href="/home/" data-enter>
+            <span class="enter__label">Enter</span>
+            <svg class="enter__arrow" viewBox="0 0 26 8" aria-hidden="true" focusable="false">
+              <line x1="0" y1="4" x2="24" y2="4" />
+              <polyline points="20.5,0.5 24,4 20.5,7.5" />
+            </svg>
+            <span class="visually-hidden">Interstyle Home — outdoor, indoor, doors and soft furnishing</span>
+          </a>
+        </div>
+      </div></div>
+    </section>
+
+  </main>
+
+  <script src="/assets/js/preloader.js?v=29b55abf"></script>
+  <script src="/assets/js/landing.js?v=c1705c08" defer></script>
+</body>
+</html>

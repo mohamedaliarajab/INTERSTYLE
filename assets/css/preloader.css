@@ -1,0 +1,106 @@
+/* ==========================================================================
+   INTERSTYLE — Preloader
+
+   The brand's orange square, drawn as an outline and filled in pixel by
+   pixel as the site loads: cells light up in a randomised order that
+   advances left to right, so the mark builds itself and completes at 100%.
+   ========================================================================== */
+
+.preloader { display: none; }
+
+html.is-preloading .preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter, 1.5rem);
+  background: var(--is-white);
+  transition: opacity 700ms var(--ease-brand), visibility 0s linear 700ms;
+}
+
+html.is-preloading .preloader.is-done,
+.preloader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+/* --- The square ----------------------------------------------------------- */
+
+.preloader__mark {
+  position: relative;
+  width: clamp(8rem, 20vw, 13rem);
+  aspect-ratio: 1;
+  border: 2px solid var(--is-orange);
+  opacity: 0;
+  animation: pre-mark-in 700ms var(--ease-brand) 80ms forwards;
+}
+
+@keyframes pre-mark-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Flush to the outline — no gutter between the rule and the pixels. */
+.preloader__pixels {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 12), 1fr);
+  grid-template-rows: repeat(var(--rows, 12), 1fr);
+}
+
+.preloader__px {
+  background: var(--is-orange);
+  opacity: 0;
+  /* Snappy, not a fade: cells should read as solid pixels switching on. */
+  transition: opacity 90ms linear;
+}
+.preloader__px.is-on {
+  opacity: 1;
+  /* Closes the hairline seams left by fractional grid tracks, which
+     otherwise make a solid block read as a pale tint. */
+  box-shadow: 0 0 0 0.75px var(--is-orange);
+}
+
+/* --- Readout -------------------------------------------------------------- */
+
+.preloader__pct {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--is-black);
+  font-variant-numeric: tabular-nums;
+}
+.preloader__pct sup {
+  font-size: 0.38em;
+  vertical-align: super;
+  margin-left: 0.12em;
+  color: var(--is-orange);
+}
+
+/* --------------------------------------------------------------------------
+   Hold the landing choreography until the loader clears.
+   -------------------------------------------------------------------------- */
+
+html.is-preloading .reveal,
+html.is-preloading .panel__texture {
+  animation-play-state: paused;
+}
+
+html.is-preloading,
+html.is-preloading body { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader__mark { animation: none; opacity: 1; }
+  .preloader__px { transition-duration: 1ms; }
+  html.is-preloading .preloader { transition-duration: 1ms; }
+}

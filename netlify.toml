@@ -1,0 +1,44 @@
+# Netlify configuration — static site, no build step.
+
+[build]
+  publish = "."
+  command = ""
+
+# Filenames here are NOT fingerprinted (no build step), so "immutable" would
+# pin visitors to a stale copy of the CSS/JS for a year. Revalidate instead:
+# a 304 is cheap, and updates land immediately.
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Photography is swapped from time to time too, so cache it for a day rather
+# than forever.
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Friendly aliases for the two brand paths.
+[[redirects]]
+  from = "/interstyle-home"
+  to = "/home/"
+  status = 301
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301

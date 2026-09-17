@@ -1,0 +1,228 @@
+/* ==========================================================================
+   INTERSTYLE — Landing (split entry screen)
+
+   Two brand paths, one decision. Left is Interstyle: paper white, drafting
+   grid, orange call to action. Right is Interstyle Home: stone grey, woven
+   crosshatch, black call to action.
+   ========================================================================== */
+
+html,
+body { height: 100%; }
+
+body {
+  overflow: hidden;
+  background: var(--surface-stone);
+}
+
+/* --------------------------------------------------------------------------
+   1. Split shell
+   -------------------------------------------------------------------------- */
+
+.split {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   2. Panels
+   -------------------------------------------------------------------------- */
+
+.panel {
+  position: relative;
+  flex: 0 0 var(--panel-rest);
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: clamp(2rem, 5vh, 4rem) clamp(1.25rem, 4vw, 3.5rem);
+  cursor: pointer;
+  transition: flex-basis var(--dur-slow) var(--ease-brand);
+}
+
+.panel--interstyle { background: var(--surface-paper); }
+.panel--home       { background: var(--surface-stone); }
+
+/* --- 2a. Texture layer ---------------------------------------------------- */
+
+.panel__texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: texture-in 1.6s var(--ease-brand) 0.2s forwards;
+  transition: opacity var(--dur-slow) var(--ease-brand);
+}
+
+/* Interstyle — a drafting grid. Design. Construct. Innovate. */
+.panel--interstyle .panel__texture {
+  --grid-cell: clamp(64px, 5vw, 100px);
+  background-image:
+    repeating-linear-gradient(to right,  var(--line-grid) 0 1px, transparent 1px var(--grid-cell)),
+    repeating-linear-gradient(to bottom, var(--line-grid) 0 1px, transparent 1px var(--grid-cell));
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(135% 115% at 50% 50%, #000 62%, transparent 100%);
+          mask-image: radial-gradient(135% 115% at 50% 50%, #000 62%, transparent 100%);
+}
+
+/* Interstyle Home — a fine woven crosshatch. Home. Garden. Living. */
+.panel__texture--boost {
+  animation: none;
+  opacity: 0;
+}
+
+.panel--home .panel__texture {
+  background-image:
+    repeating-linear-gradient( 45deg, var(--line-weave) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(-45deg, var(--line-weave) 0 1px, transparent 1px 8px);
+}
+
+/* A soft interior glow gives the stone panel depth without an image. */
+.panel--home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 55% at 50% 46%, rgba(255, 255, 255, 0.75), transparent 72%);
+  pointer-events: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Panel content
+   -------------------------------------------------------------------------- */
+
+/* Wrapper the pointer parallax drives, so it never collides with the
+   content's own hover and exit transforms. */
+.panel__drift {
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+.panel__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition:
+    transform var(--dur-slow) var(--ease-brand),
+    opacity   var(--dur-base) var(--ease-inout);
+}
+
+.panel__logo {
+  height: auto;
+  transition: transform var(--dur-slow) var(--ease-brand);
+}
+
+.panel--interstyle .panel__logo {
+  width: clamp(11.875rem, 15vw, 18.75rem);   /* 190 – 300px */
+  aspect-ratio: 3000 / 448;
+}
+
+.panel--home .panel__logo {
+  width: clamp(9.75rem, 12.3vw, 15.375rem);   /* 156 – 246px */
+  aspect-ratio: 1234 / 540;
+}
+
+.panel__tagline { margin-top: clamp(1.125rem, 1.9vw, 1.875rem); }
+.panel__action  { margin-top: clamp(1.75rem, 3vw, 2.75rem); }
+
+.panel--interstyle .enter {
+  --enter-accent: var(--is-orange);
+  --enter-ink: var(--is-white);
+}
+.panel--home .enter {
+  --enter-accent: var(--is-black);
+  --enter-ink: var(--is-white);
+}
+
+/* --------------------------------------------------------------------------
+   4. Hover — the chosen side leans in, the other steps back
+   -------------------------------------------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .split:has(.panel--interstyle:hover) .panel--interstyle,
+  .split:has(.panel--home:hover)       .panel--home {
+    flex-basis: var(--panel-hover);
+  }
+  .split:has(.panel--interstyle:hover) .panel--home,
+  .split:has(.panel--home:hover)       .panel--interstyle {
+    flex-basis: var(--panel-quiet);
+  }
+
+  /* The quiet side softens rather than dims to grey — keeps it premium. */
+  .split:has(.panel--interstyle:hover) .panel--home       .panel__content,
+  .split:has(.panel--home:hover)       .panel--interstyle .panel__content {
+    opacity: 0.55;
+  }
+
+  .panel:hover .panel__logo { transform: translateY(-0.25rem) scale(1.02); }
+
+  /* The weave is a denser pattern than the grid, so it needs a lighter hand. */
+  .panel--interstyle:hover .panel__texture--boost { opacity: 1; }
+  .panel--home:hover       .panel__texture--boost { opacity: 0.45; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Exit — the chosen panel takes the whole screen, then we navigate
+   -------------------------------------------------------------------------- */
+
+.split.is-exiting .panel {
+  transition: flex-basis var(--dur-exit) var(--ease-inout);
+  cursor: default;
+}
+.split.is-exiting .split.is-exiting .panel.is-chosen .panel__content {
+  opacity: 0;
+  transform: translateY(-0.75rem) scale(1.04);
+  transition:
+    opacity   420ms var(--ease-inout) 120ms,
+    transform var(--dur-exit) var(--ease-brand);
+}
+
+/* --------------------------------------------------------------------------
+   6. Entrance choreography
+   -------------------------------------------------------------------------- */
+
+/* .reveal + @keyframes reveal-up now live in base.css (shared with the
+   brand pages). */
+
+@keyframes texture-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   7. Responsive — stacked on narrow screens, still one tap to enter
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .split { flex-direction: column; }
+
+  .panel {
+    flex: 1 1 50%;
+    padding: clamp(1.75rem, 6vw, 3rem) 1.5rem;
+  }
+
+  .panel--interstyle .panel__logo { width: min(52vw, 14.375rem); }
+  .panel--home       .panel__logo { width: min(42vw, 11.25rem); }
+
+  /* Finer grid so the cells stay in proportion on a narrow panel. */
+  .panel--interstyle .panel__texture { --grid-cell: 52px; }
+
+  .split.is-exiting .panel.is-chosen  { flex-basis: 100%; flex-grow: 1; }
+  .split.is-exiting .panel.is-leaving { flex-basis: 0%; flex-grow: 0; }
+}
+
+/* Short viewports (landscape phones) — tighten the stack. */
+@media (max-height: 560px) and (max-width: 860px) {
+  .panel { padding: 1.25rem; }
+  .panel__tagline { margin-top: 0.75rem; }
+  .panel__action  { margin-top: 1.125rem; }
+  .enter { padding: 0.85em 1.6em; }
+  .panel--interstyle .panel__logo { width: min(42vw, 12.5rem); }
+  .panel--home       .panel__logo { width: min(34vw, 10.5rem); }
+}
