@@ -39,6 +39,15 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
+# The archive of superseded photography lives in the repo for safekeeping and
+# is never served. `force` is required: without it a static file that exists on
+# disk wins over the redirect, and the folder ships inside the publish dir.
+[[redirects]]
+  from = "/archive/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Friendly aliases for the two brand paths.
 [[redirects]]
   from = "/interstyle-home"

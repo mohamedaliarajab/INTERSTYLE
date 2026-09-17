@@ -124,13 +124,15 @@ weight in pop-ups (Light weight read as grey on screen).
 
 **Hero:** `ambiance/hero-bathroom-9eeba7-<width>.jpg` — 1280 / 1920 / 2560 /
 3480 / 4800 / 6408px, made from a Photoshop "Preserve Details 2.0" 2× upscale
-of `NEW IMAGES/Hero.png` (master kept in `NEW IMAGES/HERO UPSCALED/`). Focal
+of the client's `Hero.png`. **That master and its upscale no longer exist**
+(§8), so the rendition ladder in `assets/` is all there is. Focal
 point `center 68%`. Headline "Premium Surfaces for *Exceptional* Spaces".
 
 **About carousel:** 10 slides — `ambiance/carousel-1..10.jpg`. Slides 6–10
 were added 17 Sep 2026 from **ecoceramic.es** (a partner brand): pool terrace,
 pearl bathroom, stone-basin bathroom, open-plan living, kitchen — downloaded at
-2133–2560px and saved at 2000px wide; originals in `NEW IMAGES/Carousel/`.
+2133–2560px and saved at 2000px wide. The originals are gone, so the 2000px
+copies in `assets/` are now the largest ones held.
 
 **Product range — in this order:**
 
@@ -149,11 +151,11 @@ Sanitary Ware: the vanity with two basins and an oval mirror (`06.jpg`) is
 always first; `shuffle: true` puts the other 15 in a new order on every open.
 The old basin-mounting diagram collage (`05.jpg`) was replaced on 17 Sep by
 an arrangement of coloured countertop basins (`18-3ace5a.jpg`, 2040×1031,
-source `NEW IMAGES/Sanitary Ware/basins-collection.png`); the collage is in
-`~/Desktop/interstyle-web-archive/removed-2026-09-17/`.
+source `basins-collection.png`, since deleted); the collage is kept in
+`archive/removed-2026-09-17/`.
 Slides 15–17 are Ariston water-heater lifestyle shots (bathroom, timber
 kitchen, under-counter) from ariston.com, 1200×1200 — the largest Ariston
-publishes; originals in `NEW IMAGES/Sanitary Ware/`. Sanitary Ware lists a
+publishes; the copies in `assets/` are the only ones left. Sanitary Ware lists a
 "Water heating" range and Ariston among its brands.
 **AstralPool** was considered for the Outdoor pop-up and skipped: its public
 photos are 569px product shots and astralpool.com blocks automated browsing.
@@ -162,7 +164,8 @@ Stones copy was written from stonewrap.com **without naming that brand** — kee
 it unbranded. No technical specs are claimed (the source gives none). Slides
 8–11 were added 17 Sep 2026 from Stonewrap's own gallery (lounge wall, brick
 fireplace, villa with pool, mountain house), kept at their full 1800–2000px;
-originals are in `NEW IMAGES/Stone Tiles/`.
+they were saved at full source size, so the deletion of the source folder
+cost nothing here.
 
 **Pop-up write-ups:** all six Interstyle pop-ups have a lead paragraph, extra
 paragraphs (`more`), named **ranges** (`[name, text]`) and a details table
@@ -385,10 +388,15 @@ content-hashed); images cache for 1 day.
   → Storage → *Clear site data*, then reload. (The Claude app's browser pane
   cannot run service workers at all — test offline in Chrome or Safari.)
 - **Images pasted into chat can't be saved to disk by the assistant.** Save the
-  file to a folder (e.g. `~/Desktop/NEW IMAGES/`) and say where it is.
-- Source photos from the client live in `~/Desktop/NEW IMAGES/`.
-- Previous gallery sets are archived in `~/Desktop/interstyle-web-archive/`
-  (outside the deploy folder).
+  file anywhere (e.g. `~/Desktop/`) and say where it is.
+- **`~/Desktop/NEW IMAGES/` was deleted (17 Sep 2026).** The client's source
+  photos and both hero masters went with it — what is in `assets/` is all that
+  survives. Ask the client again if an original is ever needed.
+- Previous gallery sets now live in **`archive/` inside this folder**, tracked
+  in git so GitHub holds the backup. `netlify.toml` returns 404 for
+  `/archive/*` and `robots.txt` disallows it, so it ships inside the publish
+  directory but is never served. It is the **only copy of 34 older gallery
+  photos** (the other 5 are duplicates of images still on the site).
 
 ---
 
@@ -398,8 +406,10 @@ content-hashed); images cache for 1 day.
 - [ ] **Hero sharpness:** both heroes are Photoshop AI upscales. Topaz
       Gigapixel (installed, but its CLI needs an enterprise licence) gives a
       cleaner result, especially on the Home hero, which started at only
-      1800px. Export 2× (Interstyle) / 4× (Home) from the Gigapixel app and run
-      `tools/hero-image.py`. Best of all: the original photo from Febal Casa.
+      1800px. **The masters were deleted with `NEW IMAGES`**, so this now means
+      going back to the client for the original photograph — for Home, the
+      Febal Casa showroom shot — and re-running `tools/hero-image.py`. The
+      deployed widths are unaffected and stay as they are until then.
 - [ ] **iPhone offline limit:** Safari deletes a site's saved data after about
       7 days without a visit (unless it was added to the Home Screen), so
       offline browsing on iPhone lasts a week from the last visit.

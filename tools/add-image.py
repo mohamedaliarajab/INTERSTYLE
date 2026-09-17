@@ -2,7 +2,7 @@
 """
 Append an image to the END of a product gallery on the Interstyle page.
 
-    python3 tools/add-image.py floor-wall-tiles "~/Desktop/NEW IMAGES/ADD/mosaic.png"
+    python3 tools/add-image.py floor-wall-tiles "~/Desktop/mosaic.png"
     python3 tools/add-image.py stone "/path/photo.webp" --max 2000   (keep more pixels)
 
 Gallery keys: floor-wall-tiles, outdoor-tiles, stone, sanitary-ware,

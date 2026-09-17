@@ -15,7 +15,7 @@ It will:
     hero-<name>-<hash>-<width>.jpg so a new master never reuses a filename
   * rewrite the hero <img> srcset / sizes / width / height on the page
   * rewrite the matching srcset line in assets/js/preloader.js
-  * move the previous renditions to ~/Desktop/interstyle-web-archive/
+  * move the previous renditions to archive/ inside the project
 
 Then run  python3 tools/version-assets.py
 """
@@ -32,7 +32,7 @@ except ImportError:
     sys.exit("Pillow is required:  python3 -m pip install --user pillow")
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-ARCHIVE = pathlib.Path.home() / "Desktop" / "interstyle-web-archive" / f"heroes-{date.today()}"
+ARCHIVE = ROOT / "archive" / f"heroes-{date.today()}"
 
 HEROES = {
     "interstyle": {"page": "interstyle/index.html", "dir": "assets/img/ambiance", "name": "bathroom"},
