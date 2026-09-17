@@ -514,7 +514,10 @@
         if (label) label.textContent = labelText;
         if (submit) submit.disabled = false;
         busy = false;
-        say('Sorry — that did not send. Please email info@isc-ng.com or call 0706 667 7555.', true);
+        // The site itself still browses offline, so say why the send failed.
+        say(navigator.onLine === false
+          ? 'You are offline, so your enquiry was not sent. Please try again once you are connected, or call 0706 667 7555.'
+          : 'Sorry — that did not send. Please email info@isc-ng.com or call 0706 667 7555.', true);
       });
     });
   }

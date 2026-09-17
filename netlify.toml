@@ -24,6 +24,13 @@
   [headers.values]
     Cache-Control = "public, max-age=86400, must-revalidate"
 
+# The offline worker must always be checked, or visitors keep an old copy
+# of the site for up to a day after a deploy.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
 [[headers]]
   for = "/*"
   [headers.values]

@@ -54,8 +54,11 @@ assets/css/
   brand-page.css    Hero, about, carousel, products, brands, locations,
                     contact form, gallery pop-up, readability pass
 
+sw.js                          Service worker — offline browsing (§6)
+
 assets/js/
   preloader.js      Loader: builds pixel grid, real % progress, ?holdloader
+  offline.js        Registers sw.js, asks it to save the site in the background
   landing.js        Panel choice, exit transition, pointer parallax
   site.js           Nav, scroll parallax, reveals, carousel, pop-up, form
   products.js       ← INTERSTYLE gallery data (titles, copy, bullets, images)
@@ -72,8 +75,10 @@ assets/img/
 
 tools/
   add-image.py         Append a photo to a gallery (see §8)
+  hero-image.py        Install a hero photo in every width + srcset + preloader
   optimise-images.py   Batch-convert a folder to web JPEGs
-  version-assets.py    Cache-bust CSS/JS links — run after editing CSS/JS
+  version-assets.py    Cache-bust CSS/JS links and stamp sw.js VERSION —
+                       run after editing CSS/JS
 
 netlify.toml, robots.txt, .gitignore, README.md (older notes)
 ```
@@ -111,9 +116,10 @@ weight in pop-ups (Light weight read as grey on screen).
 
 ### Interstyle (`/interstyle/`)
 
-**Hero:** `ambiance/hero-bathroom.jpg` (3204px, with 2000/1200 `srcset`
-renditions, focal point `center 68%`). Headline "Premium Surfaces for
-*Exceptional* Spaces".
+**Hero:** `ambiance/hero-bathroom-9eeba7-<width>.jpg` — 1280 / 1920 / 2560 /
+3480 / 4800 / 6408px, made from a Photoshop "Preserve Details 2.0" 2× upscale
+of `NEW IMAGES/Hero.png` (master kept in `NEW IMAGES/HERO UPSCALED/`). Focal
+point `center 68%`. Headline "Premium Surfaces for *Exceptional* Spaces".
 
 **About carousel:** 5 slides — `ambiance/carousel-1..5.jpg`.
 
@@ -156,7 +162,9 @@ General email: **info@isc-ng.com**.
 
 ### Interstyle Home (`/home/`)
 
-**Hero:** `home/hero.jpg` (Febal Casa showroom). "Living Spaces *Designed* to Inspire".
+**Hero:** `home/hero-showroom-3a89ab-<width>.jpg` — 1280 … 7200px, a 4×
+Photoshop upscale of the old 1800px `hero.jpg` (Febal Casa showroom; no larger
+original was found). "Living Spaces *Designed* to Inspire".
 **About carousel:** 6 slides — `home/about-1..6.jpg`. Stats: 3 Countries · 4+ Brands · 100% Curated.
 
 **Collections:**
@@ -178,8 +186,26 @@ General email: **info@isc-ng.com**.
 ## 6. Behaviour worth knowing
 
 - **Preloader** (landing only): orange outlined square filling with random
-  pixels left→right, % beside it. Warms key images so pages open instantly.
-  Hidden without JS. Append `?holdloader=1` to keep it on screen for design work.
+  pixels left→right, % beside it. Warms the first-screen images of **both**
+  brand pages (logos, carousels, brand marks) so they open instantly. Heroes
+  are warmed through the same `srcset`/`sizes` as the pages, so the browser
+  fetches exactly the width that screen will use. Hidden without JS. Append
+  `?holdloader=1` to keep it on screen for design work.
+- **Hero widths:** `sizes="(orientation: portrait) 160vw, 112vw"` — the
+  parallax scales the photo to 112%, and portrait screens crop its sides. A
+  phone gets ~170–350KB, a Retina laptop ~0.8–1MB, a 5K/6K display the full
+  ~2–2.4MB file.
+- **Offline (`sw.js`):** after the first visit the site works with no
+  connection. Pages are network-first (fresh when online; the saved copy after
+  3s on a slow connection, or immediately offline). CSS/JS cache-first (their
+  `?v=` hash makes a changed file a new URL). Images cache-first, refreshed in
+  the background. Google Fonts cached. Once loaded, the page asks the worker to
+  save every image on all three pages plus the gallery photography (~20MB) —
+  skipped under Data Saver or 2G, where galleries save as they are opened.
+  Offline, a hero width that was never saved falls back to any saved width of
+  the same photo. The contact form says "You are offline…" instead of failing
+  silently. Verified in headless Chrome with the server stopped and the
+  internet blocked: all pages, galleries, fonts and images load.
 - **Parallax:** scroll parallax on ~53 layers per brand page (auto-assigned by
   selector in `site.js`); pointer parallax on the landing. Off under
   `prefers-reduced-motion`.
@@ -206,10 +232,13 @@ General email: **info@isc-ng.com**.
 ## 7. Deploy checklist (Netlify)
 
 1. Deploy the folder.
-2. **Forms → enable form detection**, then **Forms → Notifications → Email
+2. `netlify.toml` serves `/sw.js` with `Cache-Control: no-cache` so returning
+   visitors pick up each deploy — keep that header.
+3. **Forms → enable form detection**, then **Forms → Notifications → Email
    notification → `info@isc-ng.com`** for both forms. *Without this, enquiries
    are stored in Netlify but not emailed.*
-3. Test a real submission on the live URL.
+4. Test a real submission on the live URL, then load the site, switch the
+   phone to airplane mode and browse — it should all still work.
 
 Caching (`netlify.toml`): CSS/JS revalidate every load (links are
 content-hashed); images cache for 1 day.
@@ -220,18 +249,24 @@ content-hashed); images cache for 1 day.
 
 | Task | How |
 |---|---|
+| Replace a hero photo | Get the biggest master you can (ideally 6000–7200px — upscale in Topaz Gigapixel or Photoshop), then `python3 tools/hero-image.py interstyle "/path/master.png"` (or `home`), then `version-assets.py`. Old widths move to the archive |
 | Add a photo to a gallery | Save it anywhere, then `python3 tools/add-image.py <key> "/path/to/file"` — appends as the last slide |
 | Remove a gallery photo | Delete its path from `products.js` / `products-home.js` and delete the file |
 | Reorder a gallery | Reorder the `images` array in the data file |
 | Change gallery copy/bullets | Edit `title`, `desc`, `features` in the data file |
 | Rename a product | Update **4 places**: card `.product__nm`, data-file `title` + `enquiry`, form `<option>`, footer link |
-| Edit any CSS or JS | Then run `python3 tools/version-assets.py` so browsers load the new file |
+| Edit any CSS or JS | Then run `python3 tools/version-assets.py` so browsers load the new file (it also bumps the offline copy) |
 | Change brand colours | `assets/css/tokens.css` (Home overrides in `site.css` → `.theme-home-page`) |
 
 **Rules learned the hard way**
 - **Never reuse an image filename for a different picture.** Browsers serve the
   cached old image. `add-image.py` now names files `NN-hash.jpg` to prevent it.
 - **Always run `version-assets.py` after CSS/JS edits**, or changes won't show.
+  With the offline worker this matters even more: an unversioned CSS/JS edit
+  is served from the saved copy indefinitely.
+- **Stuck on an old version while developing?** Chrome DevTools → Application
+  → Storage → *Clear site data*, then reload. (The Claude app's browser pane
+  cannot run service workers at all — test offline in Chrome or Safari.)
 - **Images pasted into chat can't be saved to disk by the assistant.** Save the
   file to a folder (e.g. `~/Desktop/NEW IMAGES/`) and say where it is.
 - Source photos from the client live in `~/Desktop/NEW IMAGES/`.
@@ -243,6 +278,14 @@ content-hashed); images cache for 1 day.
 ## 9. Open items
 
 - [ ] **Soft Furnishings** (Home) has no photos — shows placeholder.
+- [ ] **Hero sharpness:** both heroes are Photoshop AI upscales. Topaz
+      Gigapixel (installed, but its CLI needs an enterprise licence) gives a
+      cleaner result, especially on the Home hero, which started at only
+      1800px. Export 2× (Interstyle) / 4× (Home) from the Gigapixel app and run
+      `tools/hero-image.py`. Best of all: the original photo from Febal Casa.
+- [ ] **iPhone offline limit:** Safari deletes a site's saved data after about
+      7 days without a visit (unless it was added to the Home Screen), so
+      offline browsing on iPhone lasts a week from the last visit.
 - [ ] **Low-resolution images** (under 1000px) that look soft when enlarged —
       only 3 of 101 photos: Tools & Accessories LED staircase
       (`tools-accessories/11-46d99e.jpg`, 562px); Home carousel `about-4`

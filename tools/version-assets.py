@@ -12,6 +12,9 @@ content hash to each reference:
 
 Re-run it after editing any CSS or JS. Only the query string changes, so
 nothing else in the page is touched. Unchanged files keep their hash.
+
+It also stamps VERSION in sw.js with a hash of all the CSS and JS, so
+returning visitors' offline copy is refreshed whenever those files change.
 """
 import hashlib
 import pathlib
@@ -46,6 +49,24 @@ def main():
         else:
             print(f"  unchanged {page.relative_to(ROOT)}")
     print(f"\n{changed} page(s) rewritten")
+    stamp_service_worker()
+
+
+def stamp_service_worker():
+    sw = ROOT / "sw.js"
+    if not sw.exists():
+        return
+    h = hashlib.sha256()
+    for f in sorted((ROOT / "assets/css").glob("*.css")) + sorted((ROOT / "assets/js").glob("*.js")):
+        h.update(f.name.encode() + f.read_bytes())
+    version = h.hexdigest()[:8]
+    text = sw.read_text()
+    new = re.sub(r"var VERSION = '[^']*';", f"var VERSION = '{version}';", text, count=1)
+    if new != text:
+        sw.write_text(new)
+        print(f"  sw.js VERSION -> {version}")
+    else:
+        print("  sw.js unchanged")
 
 
 if __name__ == "__main__":

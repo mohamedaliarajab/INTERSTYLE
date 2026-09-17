@@ -65,30 +65,53 @@
     '/assets/img/interstyle-logo.png',
     '/assets/img/interstyle-home-logo.png',
     '/assets/img/interstyle-logo-ondark.png',
-    '/assets/img/ambiance/hero-bathroom-2000.jpg',
     '/assets/img/ambiance/carousel-1.jpg',
     '/assets/img/ambiance/carousel-2.jpg',
     '/assets/img/ambiance/carousel-3.jpg',
     '/assets/img/ambiance/carousel-4.jpg',
     '/assets/img/ambiance/carousel-5.jpg',
-    '/assets/img/brands/porcelanosa.png',
-    '/assets/img/brands/rak-ceramics.png',
+    '/assets/img/home/about-1.jpg',
+    '/assets/img/home/about-2.jpg',
+    '/assets/img/home/about-3.jpg',
+    '/assets/img/home/about-4.jpg',
+    '/assets/img/home/about-5.jpg',
+    '/assets/img/home/about-6.jpg',
+    '/assets/img/brands/alumacer.png',
+    '/assets/img/brands/ariston.png',
+    '/assets/img/brands/astralpool.png',
+    '/assets/img/brands/chakra.png',
     '/assets/img/brands/ecoceramic.jpg',
     '/assets/img/brands/epsilon-tile.png',
-    '/assets/img/brands/portobello.webp',
-    '/assets/img/brands/kohler.png',
-    '/assets/img/brands/hansgrohe.png',
-    '/assets/img/brands/kludi.png',
+    '/assets/img/brands/ezpeleta.png',
+    '/assets/img/brands/febal-casa.png',
+    '/assets/img/brands/gala.png',
     '/assets/img/brands/geberit.png',
-    '/assets/img/brands/noken.png',
+    '/assets/img/brands/hansgrohe.png',
+    '/assets/img/brands/itt-ceramic.png',
+    '/assets/img/brands/kludi.png',
+    '/assets/img/brands/kohler.png',
     '/assets/img/brands/laticrete.png',
     '/assets/img/brands/legrand.png',
+    '/assets/img/brands/living-ceramics.png',
+    '/assets/img/brands/noken.png',
+    '/assets/img/brands/porcelanosa.png',
+    '/assets/img/brands/porte-imic.png',
+    '/assets/img/brands/portobello.webp',
+    '/assets/img/brands/rak-ceramics.png',
     '/assets/img/brands/rubi.png',
-    '/assets/img/brands/sonia.png',
-    '/assets/img/brands/itt-ceramic.png'
+    '/assets/img/brands/sonia.png'
   ];
 
-  var total    = ASSETS.length + 1;   // + the document's own load event
+  // Heroes come in several widths. Loading them through the same srcset and
+  // sizes as the brand pages makes the browser fetch exactly the file those
+  // pages will ask for on this screen. tools/hero-image.py rewrites these.
+  var HERO_SIZES = '(orientation: portrait) 160vw, 112vw';
+  var HEROES = [
+    { page: 'interstyle', srcset: '/assets/img/ambiance/hero-bathroom-9eeba7-1280.jpg 1280w, /assets/img/ambiance/hero-bathroom-9eeba7-1920.jpg 1920w, /assets/img/ambiance/hero-bathroom-9eeba7-2560.jpg 2560w, /assets/img/ambiance/hero-bathroom-9eeba7-3480.jpg 3480w, /assets/img/ambiance/hero-bathroom-9eeba7-4800.jpg 4800w, /assets/img/ambiance/hero-bathroom-9eeba7-6408.jpg 6408w' },
+    { page: 'home', srcset: '/assets/img/home/hero-showroom-3a89ab-1280.jpg 1280w, /assets/img/home/hero-showroom-3a89ab-1920.jpg 1920w, /assets/img/home/hero-showroom-3a89ab-2560.jpg 2560w, /assets/img/home/hero-showroom-3a89ab-3480.jpg 3480w, /assets/img/home/hero-showroom-3a89ab-4800.jpg 4800w, /assets/img/home/hero-showroom-3a89ab-7200.jpg 7200w' }
+  ];
+
+  var total    = ASSETS.length + HEROES.length + 1;   // + the document's own load event
   var done     = 0;
   var shown    = 0;                   // the number on screen, eased upward
   var finished = false;
@@ -153,6 +176,13 @@
     var img = new Image();
     img.onload = img.onerror = step;   // a missing file must not stall entry
     img.src = src;
+  });
+
+  HEROES.forEach(function (hero) {
+    var img = new Image();
+    img.onload = img.onerror = step;
+    img.sizes = HERO_SIZES;            // sizes first, so the pick uses it
+    img.srcset = hero.srcset;
   });
 
   if (document.readyState === 'complete') step();
