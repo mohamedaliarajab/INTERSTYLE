@@ -427,5 +427,20 @@ and `git diff` shows anything changed since the last commit.
 
 
 GitHub: **github.com/mohamedaliarajab/INTERSTYLE** (`origin`, branch `main`),
-pushed over SSH as mohamedaliarajab. Publish new checkpoints with
-`git push` (first pushed 17 Sep 2026).
+pushed over SSH as mohamedaliarajab. Publish new checkpoints with `git push`
+(first pushed 17 Sep 2026).
+
+**Git identity:** the Mac's hostname changed to "Mac", so git can no longer
+auto-detect an author and refuses to commit. Either run once —
+`git config --global user.name "Mohamed-Ali Rajab"` and
+`git config --global user.email "<your email>"` — or prefix each commit with
+`GIT_AUTHOR_NAME="Mohamed-Ali Rajab" GIT_AUTHOR_EMAIL="mohamed-alirajab@Mohamed-Alis-MacBook-Pro.local"`
+(plus the matching `GIT_COMMITTER_*`), which is what the history uses.
+
+**Open thread — Android dark mode.** The client reported the site looking
+black in a browser on Samsung/Android. Two opt-outs are now in place
+(`color-scheme: only light` and a `prefers-color-scheme: dark` block that
+answers with the light palette), verified against Chrome's force-dark. Still
+unconfirmed on the real device, and **this folder has never been deployed** —
+so whatever the phone was showing was either an older deployment or this Mac
+over the LAN (`http://192.168.0.109:8420`). Ask which address and browser.
