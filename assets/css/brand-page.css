@@ -126,7 +126,6 @@
   overflow: hidden;
   color: var(--accent);
 }
-.stars--lg { font-size: 1.5rem; }
 
 /* Short viewports: tighten the copy so the hero stays near one screen. */
 @media (max-height: 700px) {
@@ -700,63 +699,11 @@ a.contact__val:hover { color: var(--accent); }
 .form .btn[disabled] { cursor: default; opacity: 1; }
 
 /* --------------------------------------------------------------------------
-   7b. Client reviews (Google) — summary on the left, three cards on the right;
-       on phones and tablets the cards become a swipeable row
+   7b. Client reviews (Google) — four cards in a row on desktop; on phones and
+       tablets the cards become a swipeable row
    -------------------------------------------------------------------------- */
 
-.reviews {
-  display: grid;
-  gap: clamp(2rem, 4vw, 3.5rem);
-  margin-top: 3rem;
-}
-@media (min-width: 62rem) {
-  .reviews { grid-template-columns: minmax(15rem, 1fr) 3fr; align-items: start; }
-}
-
-.reviews__score {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 8vw, 5.5rem);
-  font-weight: 300;
-  line-height: 0.9;
-  color: var(--ink);
-}
-.reviews__summary .stars { margin-top: 0.6rem; }
-.reviews__count {
-  margin: 1rem 0 1.5rem;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--ink);
-}
-.reviews__count strong { font-weight: 600; }
-
-.reviews__places { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--stone); }
-.reviews__places a {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 44px;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid var(--stone);
-  transition: color var(--dur-fast) var(--ease-inout);
-}
-.reviews__city {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  color: var(--ink);
-  transition: color var(--dur-fast) var(--ease-inout);
-}
-.reviews__meta {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  white-space: nowrap;
-}
-.reviews__places a:hover .reviews__city { color: var(--accent); }
-
-.reviews__main { min-width: 0; }
+.reviews { margin-top: 3rem; }
 
 .reviews__list {
   display: grid;
@@ -776,7 +723,7 @@ a.contact__val:hover { color: var(--accent); }
 @media (min-width: 62rem) {
   .reviews__list {
     grid-auto-flow: row;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     overflow: visible;
   }
 }
@@ -806,7 +753,7 @@ a.contact__val:hover { color: var(--accent); }
   flex: 1;
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1.3vw + 0.9rem, 1.45rem);
+  font-size: clamp(1.2rem, 0.9vw + 0.9rem, 1.35rem);
   font-style: italic;
   font-weight: 400;
   line-height: 1.45;
@@ -837,6 +784,7 @@ a.contact__val:hover { color: var(--accent); }
 .review.is-swapped { animation: review-in var(--dur-base) var(--ease-brand) both; }
 .review.is-swapped:nth-child(2) { animation-delay: 80ms; }
 .review.is-swapped:nth-child(3) { animation-delay: 160ms; }
+.review.is-swapped:nth-child(4) { animation-delay: 240ms; }
 
 @media (hover: hover) {
   .reviews .review {

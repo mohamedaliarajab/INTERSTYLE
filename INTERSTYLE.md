@@ -177,8 +177,10 @@ don't add them, even though Interstyle's Instagram and LinkedIn still list them.
 336 reviews" badge under the hero stats): Google ratings read 17 Sep 2026 —
 Lagos 4.5 (298), Abuja 4.7 (29), Accra 4.4 (9); overall 4.5 from 336. A pool of
 8 reviews quoted **word for word** (spacing only tidied), names shortened to
-first name + initial. Three are picked at random on every visit; "See other
-reviews" moves through the rest. Left out on purpose: one with a typo
+first name + initial. Four are picked at random on every visit (a row of four
+on desktop, a swipe row on phones); "See other reviews", under the first card,
+shows the other four. The section has no rating summary (removed on request);
+the overall rating appears only in the hero badge. Left out on purpose: one with a typo
 ("superior times"), one that would need its complaint cut to quote, and one
 from "The Benjamins" (appears to be staff). Google only shows ~5 reviews per
 showroom to signed-out visitors — to add more, copy them from the Google

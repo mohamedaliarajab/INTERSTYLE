@@ -105,8 +105,9 @@
   }
 
   /* ====================================================================== 1c
-     Client reviews — the Google rating summary, and three reviews picked at
-     random on every visit; "See other reviews" moves through the rest.
+     Client reviews — four reviews picked at random on every visit; "See
+     other reviews" moves through the rest. The hero badge shows the overall
+     Google rating.
      Data: assets/js/reviews.js. Runs before the reveal setup below so the
      first cards fade in with the rest of the page.
      ====================================================================== */
@@ -127,27 +128,6 @@
     var badge = $('[data-reviews-badge]');
     if (badge && total) badge.hidden = false;
 
-    var placesList = $('[data-reviews-places]', reviewsSection);
-    places.forEach(function (p) {
-      var a = document.createElement('a');
-      a.href = 'https://www.google.com/maps/search/?api=1&query=' +
-               encodeURIComponent('Interstyle Ceramics ' + p.city) + '&query_place_id=' + p.placeId;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.setAttribute('aria-label', 'Read all ' + p.count + ' Google reviews of the ' + p.city + ' showroom');
-      var city = document.createElement('span');
-      city.className = 'reviews__city';
-      city.textContent = p.city;
-      var meta = document.createElement('span');
-      meta.className = 'reviews__meta';
-      meta.textContent = p.rating.toFixed(1) + ' ★ · ' + p.count + ' reviews';
-      a.appendChild(city);
-      a.appendChild(meta);
-      var li = document.createElement('li');
-      li.appendChild(a);
-      placesList.appendChild(li);
-    });
-
     // A fresh random order on every visit.
     var pool = REVIEWS.reviews.slice();
     for (var ri = pool.length - 1; ri > 0; ri--) {
@@ -155,7 +135,7 @@
       var swap = pool[ri]; pool[ri] = pool[rj]; pool[rj] = swap;
     }
 
-    var PER_VIEW = 3;
+    var PER_VIEW = 4;
     var first = 0;
     var reviewList = $('[data-reviews-list]', reviewsSection);
 
