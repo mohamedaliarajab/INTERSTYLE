@@ -399,3 +399,8 @@ Paste something like this:
 
 Checkpoint: the project is a git repository — `git log` shows the history,
 and `git diff` shows anything changed since the last commit.
+
+
+GitHub: **github.com/mohamedaliarajab/INTERSTYLE** (`origin`, branch `main`),
+pushed over SSH as mohamedaliarajab. Publish new checkpoints with
+`git push` (first pushed 17 Sep 2026).
