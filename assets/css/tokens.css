@@ -52,6 +52,21 @@
   --panel-quiet:  46.5%;
 }
 
+/* Android browsers (Samsung Internet's Dark mode, Chrome's auto-dark) darken
+   pages that look as though they have no dark theme of their own. The site is
+   light by design, so answer the dark query explicitly with the same light
+   values instead of leaving it unanswered. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: only light;
+    --ink:   #101820;
+    --muted: #6F7276;
+    --cream: #F7F7F6;
+    --surface-paper: #FFFFFF;
+  }
+  html, body { background: #FFFFFF; color: #101820; }
+}
+
 /* Phone screens render these hairlines at full strength rather than
    downsampled, so they need a lighter value to read the same. */
 @media (max-width: 860px) {

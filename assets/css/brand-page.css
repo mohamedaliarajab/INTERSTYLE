@@ -236,15 +236,6 @@
    and letterboxed on a narrow one, changing shape as the window resized. */
 .about__carousel { flex: none; aspect-ratio: 3 / 2; }
 
-/* Wide screens: the copy runs longer than the picture, so the picture stays
-   in view beside it rather than stretching to match. */
-@media (min-width: 62rem) {
-  .about__carousel {
-    position: sticky;
-    top: calc(var(--nav-h) + 1.5rem);
-  }
-}
-
 .carousel__slide {
   position: absolute;
   inset: 0;
