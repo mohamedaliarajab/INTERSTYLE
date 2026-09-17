@@ -185,14 +185,14 @@ Sonia, ITT Ceramic, Ariston, AstralPool, Gala, Alumácer, Living Ceramics.
 | Ibadan | 2nd Floor, Tafotech Building, MKO Abiola Way, Ring Road | 0803 324 1833 |
 | Port Harcourt | Woji Road, GRA Phase II | 0809 293 4544 |
 | Accra | Spintex Road | +233 23 404 4444 · karam@isc-ng.com |
-| Dakar | • 15 Rue Carnot, Dakar 10200 • Ngaparou, Senegal | +221 78 172 63 90 · ibrahim.yazbeck@isc-ng.com |
+| Dakar | • 15 Rue Carnot, Dakar 10200 • Route de Ngaparou, Région de Thiès | +221 78 172 63 90 · ibrahim.yazbeck@isc-ng.com |
 
 Dakar's two addresses are marked with small accent dots (`.location__list`).
 Every card has an accent **Get directions** link (`.location__map`, Dakar has
 one per address) opening Google Maps directions in a new tab. Lagos, Abuja and
 Accra carry a Google `destination_place_id`, so they open the exact business
 listing (Accra's is 33A1 Spintex Road). Ibadan, Dakar and Home's Lagos resolve
-to the exact building or street; **Port Harcourt and Ngaparou only resolve to
+to the exact building or street; **Port Harcourt and Route de Ngaparou only resolve to
 the area** because their addresses have no street number.
 General email: **info@isc-ng.com**.
 
