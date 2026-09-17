@@ -191,6 +191,13 @@ General email: **info@isc-ng.com**.
   Wired to **Netlify Forms** (`interstyle-enquiry`, `interstyle-home-enquiry`).
   On localhost it simulates success.
 - **Menu links** smooth-scroll and stop clear of the fixed nav.
+- **Back to top** (both brand pages): square button bottom-right, appears
+  after scrolling about one screen, smooth-scrolls to the top. It rides up
+  above the footer bar so it never covers "Back to Home", stays inside the
+  iPhone safe area (home indicator, landscape notch), and hides while the
+  mobile menu or a gallery is open. 44px on phones, 48px from 768px up,
+  tighter to the corner on landscape phones. Styles in `site.css` §6,
+  behaviour in `site.js` §1b.
 - **Mobile:** tested 320–1440px — no horizontal overflow, 44px tap targets,
   hamburger under 940px, hero fits one screen from 375×667 up.
 

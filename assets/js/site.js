@@ -67,6 +67,43 @@
     }
   }
 
+  /* ====================================================================== 1b
+     Back to top — shows once the hero is behind you, and docks above the
+     footer bar so it never sits on top of "Back to Home"
+     ====================================================================== */
+
+  var toTop = $('[data-to-top]');
+  if (toTop) {
+    var footBar = $('.footer__bar');
+    var lastLift = -1;
+
+    var placeToTop = function () {
+      var vh = window.innerHeight;
+      toTop.classList.toggle('is-visible', window.pageYOffset > vh * 0.9);
+
+      // Lift by however much of the footer bar has scrolled into view.
+      var lift = footBar ? Math.max(0, Math.round(vh - footBar.getBoundingClientRect().top)) : 0;
+      if (lift !== lastLift) {
+        toTop.style.setProperty('--to-top-lift', lift + 'px');
+        lastLift = lift;
+      }
+    };
+
+    window.addEventListener('scroll', placeToTop, { passive: true });
+    window.addEventListener('resize', placeToTop);
+    window.addEventListener('orientationchange', placeToTop);
+    window.addEventListener('load', placeToTop);
+    placeToTop();
+
+    toTop.addEventListener('click', function (e) {
+      window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      // Activated from the keyboard (detail 0): move focus back to the top as
+      // well, so the next Tab starts from the nav rather than the footer.
+      var brand = $('.nav__brand');
+      if (e.detail === 0 && brand) brand.focus({ preventScroll: true });
+    });
+  }
+
   /* ====================================================================== 2
      Scroll reveal
      ====================================================================== */

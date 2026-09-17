@@ -338,7 +338,9 @@ body { background: var(--is-white); color: var(--ink); }
   justify-content: space-between;
   align-items: center;
   padding: 1.1rem var(--gutter);
-  background: rgba(0, 0, 0, 0.25);
+  /* The bar sits outside <footer>, over the white body, so the shade needs
+     the dark surface beneath it or it reads as mid-grey. */
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), var(--surface-dark);
 }
 .footer__copy { font-size: 0.7rem; color: rgba(255, 255, 255, 0.28); }
 .footer__back {
@@ -372,6 +374,86 @@ body { background: var(--is-white); color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   [data-inview] { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Back to top
+   Square, like the carousel arrows. Sits inside the safe area so it clears
+   the iPhone home indicator and the notch in landscape. site.js adds
+   `is-visible` once the hero is scrolled past, and sets --to-top-lift so the
+   button rides up above the footer bar instead of covering "Back to Home".
+   -------------------------------------------------------------------------- */
+
+.to-top {
+  --to-top-size: 2.75rem;                          /* 44px tap target      */
+  --to-top-edge: clamp(1rem, 2.5vw, 2rem);
+
+  position: fixed;
+  right:  calc(var(--to-top-edge) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--to-top-edge) + env(safe-area-inset-bottom, 0px) + var(--to-top-lift, 0px));
+  z-index: 150;                                    /* under nav and modal  */
+  display: grid;
+  place-items: center;
+  width: var(--to-top-size);
+  height: var(--to-top-size);
+  padding: 0;
+  border: 1px solid var(--stone-dark);
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+  box-shadow: 0 0.5rem 1.5rem rgba(16, 24, 32, 0.12);
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.75rem);
+  /* visibility interpolates as `visible` for the whole transition, so the
+     button fades out before it leaves the tab order — no delay needed. */
+  transition: opacity      var(--dur-base) var(--ease-inout),
+              transform    var(--dur-base) var(--ease-brand),
+              visibility   var(--dur-base) linear,
+              background   var(--dur-fast) var(--ease-inout),
+              border-color var(--dur-fast) var(--ease-inout),
+              color        var(--dur-fast) var(--ease-inout);
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+
+/* Out of the way while the mobile menu or a gallery is open. */
+.nav.is-open ~ .to-top,
+body.is-locked .to-top { opacity: 0; visibility: hidden; transform: translateY(0.75rem); }
+
+.to-top svg {
+  width: 0.75rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  transition: transform var(--dur-base) var(--ease-brand);
+}
+
+/* Hover only where there is a real pointer, so a tap does not leave the
+   button stuck in its accent state on phones and tablets. */
+@media (hover: hover) {
+  .to-top:hover { background: var(--accent); border-color: var(--accent); color: var(--is-white); }
+  .to-top:hover svg { transform: translateY(-0.2rem); }
+}
+.to-top:active { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--is-white); }
+
+/* Tablets and up: a touch larger, in proportion with the wider layout. */
+@media (min-width: 48rem) {
+  .to-top { --to-top-size: 3rem; }
+}
+
+/* Phones in landscape: little height to spare, so tuck it closer to the
+   corner. The safe-area insets above still keep it clear of the notch. */
+@media (orientation: landscape) and (max-height: 32rem) {
+  .to-top { --to-top-size: 2.75rem; --to-top-edge: 0.75rem; }
+}
+
+@media print {
+  .to-top { display: none; }
 }
 
 
