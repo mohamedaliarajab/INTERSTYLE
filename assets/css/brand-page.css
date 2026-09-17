@@ -90,21 +90,6 @@
   color: var(--muted);
 }
 
-/* Google rating under the stats; links down to the reviews section. */
-.hero__rating {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem 0.6rem;
-  width: fit-content;
-  margin: -0.5rem 0 1.75rem;
-  font-size: 0.9rem;
-  color: var(--ink);
-  transition: color var(--dur-fast) var(--ease-inout);
-}
-.hero__rating strong { font-weight: 600; }
-.hero__rating:hover { color: var(--accent); }
-
 /* Star rating: grey stars with accent stars clipped to --pct on top, so a
    4.5 rating shows four and a half. */
 .stars {
@@ -133,7 +118,6 @@
   .hero__title { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
   .hero__desc  { margin-bottom: 1.1rem; }
   .stats { gap: 1.1rem; margin-bottom: 1.1rem; }
-  .hero__rating { margin: -0.4rem 0 1rem; }
   .hero__content { padding-bottom: 1rem; }
   .hero__media { min-height: clamp(6rem, 18vh, 20rem); }
 }
@@ -473,6 +457,10 @@
   max-height: 3.125rem;
   width: auto;
   object-fit: contain;
+  /* Several logo files have a solid white background (Gala, Alumácer, Living
+     Ceramics, Ecoceramic, AstralPool). Multiply turns that white into the
+     tile's own colour, so no box shows on the cream hover. */
+  mix-blend-mode: multiply;
   transition: transform var(--dur-base) var(--ease-brand);
 }
 .brand:hover img { transform: scale(1.07); }
@@ -516,16 +504,15 @@
 .location:hover { background: var(--surface-dark-raise); }
 
 /* Hover: a showroom or product card lifts toward you. `scale` is its own
-   property, so it stacks on top of the scroll parallax that site.js writes
-   to `transform` instead of fighting it. The selectors outrank site.css's
-   rule that trims parallax layers to an opacity-only transition. */
+   property, so it never fights the entrance slide on `transform`. (The grids
+   themselves carry the scroll parallax, set in site.js.) */
 @media (hover: hover) {
   .locations .location[data-inview],
   .products .product[data-inview] {
     position: relative;
-    transition-property: opacity, background-color, scale, box-shadow;
-    transition-duration: var(--dur-slow), var(--dur-fast), var(--dur-base), var(--dur-base);
-    transition-timing-function: var(--ease-brand), var(--ease-inout), var(--ease-brand), var(--ease-brand);
+    transition-property: opacity, transform, background-color, scale, box-shadow;
+    transition-duration: var(--dur-slow), var(--dur-slow), var(--dur-fast), var(--dur-base), var(--dur-base);
+    transition-timing-function: var(--ease-brand), var(--ease-brand), var(--ease-inout), var(--ease-brand), var(--ease-brand);
   }
   .locations .location:hover,
   .products .product:hover {

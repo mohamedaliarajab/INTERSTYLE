@@ -173,14 +173,13 @@ copy reads "four branches in Nigeria, a state-of-the-art showroom in Accra,
 Ghana, and a presence in Dakar, Senegal". **Kaduna and Kano have closed** —
 don't add them, even though Interstyle's Instagram and LinkedIn still list them.
 
-**Client reviews** (between Showrooms and Contact, plus a "4.5 on Google ·
-336 reviews" badge under the hero stats): Google ratings read 17 Sep 2026 —
+**Client reviews** (between Showrooms and Contact). Google ratings read 17 Sep 2026 —
 Lagos 4.5 (298), Abuja 4.7 (29), Accra 4.4 (9); overall 4.5 from 336. A pool of
 8 reviews quoted **word for word** (spacing only tidied), names shortened to
 first name + initial. Four are picked at random on every visit (a row of four
 on desktop, a swipe row on phones); "See other reviews", under the first card,
-shows the other four. The section has no rating summary (removed on request);
-the overall rating appears only in the hero badge. Left out on purpose: one with a typo
+shows the other four. No rating summary or hero rating badge is shown (both
+removed on request); the ratings are kept in `reviews.js` for reference. Left out on purpose: one with a typo
 ("superior times"), one that would need its complaint cut to quote, and one
 from "The Benjamins" (appears to be staff). Google only shows ~5 reviews per
 showroom to signed-out visitors — to add more, copy them from the Google
@@ -264,10 +263,16 @@ original was found). "Living Spaces *Designed* to Inspire".
   silently. Verified in headless Chrome with the server stopped and the
   internet blocked: all pages, galleries, fonts and images load.
 - **Hover zoom:** product and showroom cards scale to 1.045 with a shadow on
-  hover (hover-capable devices only). It uses the CSS `scale` property so it
-  stacks with the scroll parallax on `transform`. Product icons and showroom
-  numbers are their own faster parallax layers.
-- **Parallax:** scroll parallax on 63 layers (Interstyle) and 44 (Home) (auto-assigned by
+  hover (hover-capable devices only), using the CSS `scale` property.
+- **Grid parallax:** the product, brand and showroom grids each move as one
+  piece; the cards inside never drift separately (that pulled neighbours
+  1–4px out of line and broke the hairlines — fixed 17 Sep). Product icons
+  (0.1) and showroom numbers (0.045) drift inside their cards, kept small
+  enough never to touch the text. Text layers move in whole pixels.
+- **Brand logos** use `mix-blend-mode: multiply`, so logo files with a white
+  background (Gala, Alumácer, Living Ceramics, Ecoceramic, AstralPool) show
+  no box on the cream hover. New logos don't need their white removed.
+- **Parallax:** scroll parallax on 35 layers (Interstyle) and 33 (Home) (auto-assigned by
   selector in `site.js`); pointer parallax on the landing. Off under
   `prefers-reduced-motion`.
 - **Gallery pop-up:** 92vw × 88dvh; on phones (≤40rem wide, or ≤32rem tall

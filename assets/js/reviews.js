@@ -13,6 +13,7 @@
 
 window.INTERSTYLE_REVIEWS = {
 
+  // Showroom ratings for reference (not displayed on the site at present).
   places: [
     { city: 'Lagos', rating: 4.5, count: 298, placeId: 'ChIJ6Vr3SBb1OxARUGxdE69Ypjg' },
     { city: 'Abuja', rating: 4.7, count: 29,  placeId: 'ChIJIyETkvEKThARjqEgt2mkjf4' },

@@ -106,8 +106,7 @@
 
   /* ====================================================================== 1c
      Client reviews — four reviews picked at random on every visit; "See
-     other reviews" moves through the rest. The hero badge shows the overall
-     Google rating.
+     other reviews" moves through the rest.
      Data: assets/js/reviews.js. Runs before the reveal setup below so the
      first cards fade in with the rest of the page.
      ====================================================================== */
@@ -115,18 +114,7 @@
   var REVIEWS = window.INTERSTYLE_REVIEWS;
   var reviewsSection = $('[data-reviews]');
   if (reviewsSection && REVIEWS && REVIEWS.reviews && REVIEWS.reviews.length) {
-    var places = REVIEWS.places || [];
-    var total = places.reduce(function (n, p) { return n + p.count; }, 0);
-    var score = total
-      ? places.reduce(function (s, p) { return s + p.rating * p.count; }, 0) / total
-      : 5;
     var fillStars = function (el, value) { el.style.setProperty('--pct', (value / 5 * 100) + '%'); };
-
-    $$('[data-reviews-score]').forEach(function (el) { el.textContent = score.toFixed(1); });
-    $$('[data-reviews-count]').forEach(function (el) { el.textContent = total; });
-    $$('[data-reviews-stars]').forEach(function (el) { fillStars(el, score); });
-    var badge = $('[data-reviews-badge]');
-    if (badge && total) badge.hidden = false;
 
     // A fresh random order on every visit.
     var pool = REVIEWS.reviews.slice();
@@ -246,14 +234,15 @@
     ['.section__head',                              0.05, 0],
     ['.about__body',                                0.03, 0],
     ['.statboxes',                                  0.07, 0],
-    ['.products .product',                          0.035, 0.5],
-    // Product icons drift faster than their card, like the showroom numbers.
-    ['.products .product__ic',                      0.16, 0.35],
-    ['.brands .brand',                              0.03, 0.6],
-    ['.locations .location',                        0.055, 0.55],
-    // Showroom numbers drift faster than their card, so each card reads in
-    // two planes as the section scrolls past.
-    ['.locations .location__n',                     0.16, 0.35],
+    // Card grids move as one piece. Drifting each card separately pulled
+    // neighbours 1–4px out of line and broke the hairlines between them.
+    ['.products',                                   0.035, 0],
+    ['.brands',                                     0.03, 0],
+    ['.locations',                                  0.055, 0],
+    // Inside the cards, icons and showroom numbers drift on their own plane,
+    // kept small enough never to touch the text beside them.
+    ['.products .product__ic',                      0.1, 0],
+    ['.locations .location__n',                     0.045, 0],
     ['.contact__list',                              0.045, 0],
     ['.form',                                       0.03, 0],
     ['.footer__brand',                              0.035, 0],
@@ -294,6 +283,8 @@
         if (progress > 1.4) progress = 1.4;
 
         var y = -progress * it.speed * 100;
+        // Whole pixels for text layers: fractional offsets made type shimmer.
+        if (!it.cover) y = Math.round(y);
         var t = it.cover
           ? 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(1.12)'
           : 'translate3d(0,' + y.toFixed(2) + 'px,0)';
