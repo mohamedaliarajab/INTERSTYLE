@@ -262,6 +262,11 @@ original was found). "Living Spaces *Designed* to Inspire".
   the same photo. The contact form says "You are offline…" instead of failing
   silently. Verified in headless Chrome with the server stopped and the
   internet blocked: all pages, galleries, fonts and images load.
+- **About carousel** keeps a fixed 3:2 frame at every width (the photos are
+  1.38–1.64). It used to stretch to the height of the copy beside it, which
+  made it almost square on wide screens and letterboxed below that, changing
+  shape on resize (fixed 17 Sep). From 62rem up it sticks under the nav while
+  the copy scrolls past.
 - **Hero photo** is pinned to its figure with `position: absolute; inset: 0`,
   not `height: 100%`. The figure is sized by `flex`, and Safari treats a
   percentage height there as unknown — the photo kept its own proportions,

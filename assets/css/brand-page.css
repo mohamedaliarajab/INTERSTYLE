@@ -230,8 +230,20 @@
   overflow: hidden;
   background: var(--is-black);
 }
-/* Tall enough to lead the row rather than just match the copy beside it. */
-.about__carousel { flex: 1 1 auto; min-height: clamp(20rem, 50vw, 52rem); }
+/* A steady 3:2 frame, close to the photographs' own proportions (1.38–1.64).
+   It used to stretch to the height of the copy beside it and fall back to
+   50vw below that, so the same photo showed almost square on a wide screen
+   and letterboxed on a narrow one, changing shape as the window resized. */
+.about__carousel { flex: none; aspect-ratio: 3 / 2; }
+
+/* Wide screens: the copy runs longer than the picture, so the picture stays
+   in view beside it rather than stretching to match. */
+@media (min-width: 62rem) {
+  .about__carousel {
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+  }
+}
 
 .carousel__slide {
   position: absolute;
