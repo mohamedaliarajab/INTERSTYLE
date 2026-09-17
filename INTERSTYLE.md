@@ -187,9 +187,11 @@ showroom to signed-out visitors — to add more, copy them from the Google
 Business Profile. Interstyle Home has no reviews section (these ratings belong
 to the Interstyle Ceramics listings).
 
-**Brands (20):** Porcelanosa, RAK Ceramics, Ecoceramic, Epsilon Tile,
-Portobello, Kohler, Hansgrohe, Kludi, Geberit, Noken, Laticrete, Legrand, Rubi,
-Sonia, STN Ceramica, Ariston, AstralPool, Gala, Alumácer, Living Ceramics.
+**Brands (20), grouped in this order:** tiles — Porcelanosa, RAK Ceramics,
+Portobello, STN Ceramica, Ecoceramic, Living Ceramics, Epsilon Tile; sanitary
+ware — Kohler, Hansgrohe, Geberit, Kludi, Noken, Gala, Ariston, Sonia;
+accessories — Laticrete, Rubi, Alumácer, AstralPool, Legrand. (On desktop's
+5-column grid the accessories fill the last row exactly.)
 
 **Showrooms (6):**
 
