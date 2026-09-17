@@ -130,11 +130,12 @@ window.INTERSTYLE_PRODUCTS = {
       ['Bathroom furniture', 'Vanity units, mirror cabinets and tall storage that complete the basin area.'],
       ['Baths', 'Freestanding and built-in baths, from sculptural centrepieces to space-saving designs.'],
       ['Showers & brassware', 'Rain showers, hand showers, thermostatic mixers and taps in chrome, black and brushed metal finishes.'],
-      ['Concealed systems', 'In-wall cisterns, frames and flush plates for clean wall-hung installations.']
+      ['Concealed systems', 'In-wall cisterns, frames and flush plates for clean wall-hung installations.'],
+      ['Water heating', 'Electric storage and compact water heaters that deliver reliable hot water to showers, basins and kitchens.']
     ],
     details: [
       ['Spaces', 'Homes, hotels, offices and public washrooms'],
-      ['Brands', 'Kohler, Hansgrohe, Geberit, Kludi, Noken, Gala, Sonia']
+      ['Brands', 'Kohler, Hansgrohe, Geberit, Kludi, Noken, Gala, Sonia, Ariston']
     ],
     // First photo stays first; the rest appear in a new order each time.
     shuffle: true,
@@ -151,7 +152,10 @@ window.INTERSTYLE_PRODUCTS = {
       '/assets/img/range/sanitary-ware/14.jpg',
       '/assets/img/range/sanitary-ware/04.jpg',
       '/assets/img/range/sanitary-ware/11.jpg',
-      '/assets/img/range/sanitary-ware/03.jpg'
+      '/assets/img/range/sanitary-ware/03.jpg',
+      '/assets/img/range/sanitary-ware/15-3ad6dd.jpg',
+      '/assets/img/range/sanitary-ware/16-fa5bc6.jpg',
+      '/assets/img/range/sanitary-ware/17-0ea8b5.jpg'
     ]
   },
 

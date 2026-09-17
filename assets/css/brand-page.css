@@ -213,6 +213,19 @@
 .carousel__slide.is-active { opacity: 1; }
 .carousel__slide img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Near-square and portrait photos in the pop-up (site.js adds .is-fit): the
+   whole picture, over a softened, enlarged copy of itself so the frame is
+   filled without cropping the product. */
+.carousel__slide.is-fit { overflow: hidden; background: var(--is-black); }
+.carousel__slide.is-fit::before {
+  content: "";
+  position: absolute;
+  inset: -2.5rem;
+  background: var(--slide-bg) center / cover no-repeat;
+  filter: blur(24px) brightness(0.8);
+}
+.carousel__slide.is-fit img { position: relative; object-fit: contain; }
+
 /* Awaiting artwork: hide the broken image, show the studio placeholder. */
 .carousel__slide.is-missing { background: var(--stone); }
 .carousel__slide.is-missing img { display: none; }

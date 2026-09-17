@@ -385,6 +385,19 @@
         img.style.visibility = 'hidden';
       }, true);
 
+      // Near-square and portrait photos are shown whole, over a blurred copy
+      // of themselves, rather than cropped to the wide frame, which could cut
+      // the product itself in half (a water heater, a tap).
+      $$('img', mStage).forEach(function (img) {
+        function fit() {
+          if (!img.naturalWidth || img.naturalWidth / img.naturalHeight >= 1.2) return;
+          img.parentNode.classList.add('is-fit');
+          img.parentNode.style.setProperty('--slide-bg', 'url("' + (img.currentSrc || img.src) + '")');
+        }
+        if (img.complete) fit();
+        img.addEventListener('load', fit);
+      });
+
       var thumbs = $$('.modal__thumb', mThumbs);
       var car = Carousel(mStage, {
         onChange: function (i) {

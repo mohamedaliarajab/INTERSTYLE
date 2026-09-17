@@ -135,14 +135,21 @@ point `center 68%`. Headline "Premium Surfaces for *Exceptional* Spaces".
 | 1 | `floor-wall-tiles` | Floor & Wall Tiles | 8 |
 | 2 | `outdoor-tiles` | Outdoor Tiles & Pool Mosaics | 9 |
 | 3 | `stone` | Stones | 11 |
-| 4 | `sanitary-ware` | Sanitary Ware | 13 |
+| 4 | `sanitary-ware` | Sanitary Ware | 16 |
 | 5 | `adhesives-grouts` | Tile Adhesives & Grouts | 5 |
 | 6 | `tools-accessories` | Tools & Accessories | 10 |
 
 Tools & Accessories order: RUBI cutting/handling tools → levelling wedges &
 spacers → profiles → switches.
 Sanitary Ware: the vanity with two basins and an oval mirror (`06.jpg`) is
-always first; `shuffle: true` puts the other 12 in a new order on every open.
+always first; `shuffle: true` puts the other 15 in a new order on every open.
+Slides 15–17 are Ariston water-heater lifestyle shots (bathroom, timber
+kitchen, under-counter) from ariston.com, 1200×1200 — the largest Ariston
+publishes; originals in `NEW IMAGES/Sanitary Ware/`. Sanitary Ware lists a
+"Water heating" range and Ariston among its brands.
+**AstralPool** was considered for the Outdoor pop-up and skipped: its public
+photos are 569px product shots and astralpool.com blocks automated browsing.
+Ask the AstralPool/Fluidra rep for their high-res media pack if wanted.
 Stones copy was written from stonewrap.com **without naming that brand** — keep
 it unbranded. No technical specs are claimed (the source gives none). Slides
 8–11 were added 17 Sep 2026 from Stonewrap's own gallery (lounge wall, brick
@@ -241,7 +248,10 @@ original was found). "Living Spaces *Designed* to Inspire".
 - **Gallery pop-up:** 92vw × 88dvh; on phones (≤40rem wide, or ≤32rem tall
   in landscape) it becomes a full-screen sheet inside the safe area. Photos
   change by arrows, dots, thumbnails, keyboard or a sideways swipe; the
-  active thumbnail scrolls into view. The Enquire button is sticky at the
+  active thumbnail scrolls into view. Photos narrower than 1.2:1 (square or
+  portrait) are shown whole over a blurred copy of themselves (`.is-fit`)
+  instead of being cropped — this applies to 10 photos across Outdoor,
+  Sanitary Ware and Tools. The Enquire button is sticky at the
   bottom while the write-up scrolls. (Fixed 17 Sep: on phones the thumbnail
   strip used to stretch the layout to ~860px and the text sat over the photo.) Missing image files show an
   "Image awaiting upload" placeholder, and `.jpg` paths auto-retry
