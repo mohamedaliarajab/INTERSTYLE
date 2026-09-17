@@ -446,7 +446,13 @@ and `git diff` shows anything changed since the last commit.
 
 GitHub: **github.com/mohamedaliarajab/INTERSTYLE** (`origin`, branch `main`),
 pushed over SSH as mohamedaliarajab. Publish new checkpoints with `git push`
-(first pushed 17 Sep 2026).
+(first pushed 17 Sep 2026). **The repo is public** — worth making private if the
+history should not be readable.
+
+**Restore point:** tag `checkpoint-2026-09-17` marks the last known-good state
+before the Interstyle / Interstyle Home section edits. To see what changed since,
+`git diff checkpoint-2026-09-17`; to go back to it, `git checkout
+checkpoint-2026-09-17 -- .` (keeps history, restores the files).
 
 **Git identity:** the Mac's hostname changed to "Mac", so git can no longer
 auto-detect an author and refuses to commit. Either run once —
