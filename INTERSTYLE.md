@@ -63,6 +63,7 @@ assets/js/
   site.js           Nav, scroll parallax, reveals, carousel, pop-up, form
   products.js       ← INTERSTYLE gallery data (titles, copy, bullets, images)
   products-home.js  ← INTERSTYLE HOME gallery data
+  reviews.js        ← Google ratings + client reviews (Interstyle page)
 
 assets/img/
   interstyle-logo.png, interstyle-logo-ondark.png, interstyle-home-logo.png
@@ -171,6 +172,18 @@ bullets.
 copy reads "four branches in Nigeria, a state-of-the-art showroom in Accra,
 Ghana, and a presence in Dakar, Senegal". **Kaduna and Kano have closed** —
 don't add them, even though Interstyle's Instagram and LinkedIn still list them.
+
+**Client reviews** (between Showrooms and Contact, plus a "4.5 on Google ·
+336 reviews" badge under the hero stats): Google ratings read 17 Sep 2026 —
+Lagos 4.5 (298), Abuja 4.7 (29), Accra 4.4 (9); overall 4.5 from 336. A pool of
+8 reviews quoted **word for word** (spacing only tidied), names shortened to
+first name + initial. Three are picked at random on every visit; "See other
+reviews" moves through the rest. Left out on purpose: one with a typo
+("superior times"), one that would need its complaint cut to quote, and one
+from "The Benjamins" (appears to be staff). Google only shows ~5 reviews per
+showroom to signed-out visitors — to add more, copy them from the Google
+Business Profile. Interstyle Home has no reviews section (these ratings belong
+to the Interstyle Ceramics listings).
 
 **Brands (20):** Porcelanosa, RAK Ceramics, Ecoceramic, Epsilon Tile,
 Portobello, Kohler, Hansgrohe, Kludi, Geberit, Noken, Laticrete, Legrand, Rubi,
@@ -318,6 +331,7 @@ content-hashed); images cache for 1 day.
 | Reorder a gallery | Reorder the `images` array in the data file |
 | Change gallery copy | Edit `desc`, `more`, `ranges`, `details` (or `features`) in the data file; any section left out is hidden |
 | Fix a gallery's first photo, shuffle the rest | Put that image first in `images` and add `shuffle: true` |
+| Refresh Google ratings / add a review | Edit `assets/js/reviews.js` (`places` counts and ratings, `reviews` list), then `version-assets.py`. Quote reviews exactly; never reword |
 | Change the site's web address | Edit `SITE_URL` in `tools/share-preview.py`, run it, redeploy |
 | Add or move a showroom | Copy a `.location` card; build its link as `https://www.google.com/maps/dir/?api=1&destination=<URL-encoded address>`, adding `&destination_place_id=<id>` when the business has a Google listing (write each `&` as `&amp;` in the HTML) |
 | Rename a product | Update **4 places**: card `.product__nm`, data-file `title` + `enquiry`, form `<option>`, footer link |

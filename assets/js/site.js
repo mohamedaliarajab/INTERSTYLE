@@ -104,6 +104,113 @@
     });
   }
 
+  /* ====================================================================== 1c
+     Client reviews — the Google rating summary, and three reviews picked at
+     random on every visit; "See other reviews" moves through the rest.
+     Data: assets/js/reviews.js. Runs before the reveal setup below so the
+     first cards fade in with the rest of the page.
+     ====================================================================== */
+
+  var REVIEWS = window.INTERSTYLE_REVIEWS;
+  var reviewsSection = $('[data-reviews]');
+  if (reviewsSection && REVIEWS && REVIEWS.reviews && REVIEWS.reviews.length) {
+    var places = REVIEWS.places || [];
+    var total = places.reduce(function (n, p) { return n + p.count; }, 0);
+    var score = total
+      ? places.reduce(function (s, p) { return s + p.rating * p.count; }, 0) / total
+      : 5;
+    var fillStars = function (el, value) { el.style.setProperty('--pct', (value / 5 * 100) + '%'); };
+
+    $$('[data-reviews-score]').forEach(function (el) { el.textContent = score.toFixed(1); });
+    $$('[data-reviews-count]').forEach(function (el) { el.textContent = total; });
+    $$('[data-reviews-stars]').forEach(function (el) { fillStars(el, score); });
+    var badge = $('[data-reviews-badge]');
+    if (badge && total) badge.hidden = false;
+
+    var placesList = $('[data-reviews-places]', reviewsSection);
+    places.forEach(function (p) {
+      var a = document.createElement('a');
+      a.href = 'https://www.google.com/maps/search/?api=1&query=' +
+               encodeURIComponent('Interstyle Ceramics ' + p.city) + '&query_place_id=' + p.placeId;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.setAttribute('aria-label', 'Read all ' + p.count + ' Google reviews of the ' + p.city + ' showroom');
+      var city = document.createElement('span');
+      city.className = 'reviews__city';
+      city.textContent = p.city;
+      var meta = document.createElement('span');
+      meta.className = 'reviews__meta';
+      meta.textContent = p.rating.toFixed(1) + ' ★ · ' + p.count + ' reviews';
+      a.appendChild(city);
+      a.appendChild(meta);
+      var li = document.createElement('li');
+      li.appendChild(a);
+      placesList.appendChild(li);
+    });
+
+    // A fresh random order on every visit.
+    var pool = REVIEWS.reviews.slice();
+    for (var ri = pool.length - 1; ri > 0; ri--) {
+      var rj = Math.floor(Math.random() * (ri + 1));
+      var swap = pool[ri]; pool[ri] = pool[rj]; pool[rj] = swap;
+    }
+
+    var PER_VIEW = 3;
+    var first = 0;
+    var reviewList = $('[data-reviews-list]', reviewsSection);
+
+    var reviewCard = function (item) {
+      var li = document.createElement('li');
+      li.className = 'review';
+      var stars = document.createElement('span');
+      stars.className = 'stars';
+      stars.setAttribute('role', 'img');
+      stars.setAttribute('aria-label', item.stars + ' out of 5 stars');
+      fillStars(stars, item.stars);
+      var quote = document.createElement('blockquote');
+      quote.className = 'review__text';
+      quote.textContent = item.text;
+      var by = document.createElement('p');
+      by.className = 'review__by';
+      var name = document.createElement('span');
+      name.className = 'review__name';
+      name.textContent = item.name;
+      var src = document.createElement('span');
+      src.className = 'review__src';
+      src.textContent = item.city + ' · Google review';
+      by.appendChild(name);
+      by.appendChild(src);
+      li.appendChild(stars);
+      li.appendChild(quote);
+      li.appendChild(by);
+      return li;
+    };
+
+    var showReviews = function (onLoad) {
+      reviewList.innerHTML = '';
+      for (var k = 0; k < Math.min(PER_VIEW, pool.length); k++) {
+        var cardEl = reviewCard(pool[(first + k) % pool.length]);
+        // First set reveals on scroll like the page; later sets fade straight in.
+        if (onLoad) cardEl.setAttribute('data-inview', '');
+        else cardEl.classList.add('is-swapped');
+        reviewList.appendChild(cardEl);
+      }
+    };
+    showReviews(true);
+
+    var moreReviews = $('[data-reviews-more]', reviewsSection);
+    if (moreReviews) {
+      moreReviews.hidden = pool.length <= PER_VIEW;
+      moreReviews.addEventListener('click', function () {
+        first = (first + PER_VIEW) % pool.length;
+        showReviews(false);
+        reviewList.scrollLeft = 0;
+      });
+    }
+
+    reviewsSection.hidden = false;
+  }
+
   /* ====================================================================== 2
      Scroll reveal
      ====================================================================== */
@@ -115,8 +222,12 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-inview');
-        io.unobserve(entry.target);
+        var target = entry.target;
+        target.classList.add('is-inview');
+        io.unobserve(target);
+        // The stagger delay is only for the entrance; clear it afterwards so
+        // hover effects (card zoom) respond immediately.
+        setTimeout(function () { target.style.transitionDelay = ''; }, 1400);
       });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
     revealTargets.forEach(function (el, i) {

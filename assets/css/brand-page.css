@@ -90,12 +90,51 @@
   color: var(--muted);
 }
 
+/* Google rating under the stats; links down to the reviews section. */
+.hero__rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.6rem;
+  width: fit-content;
+  margin: -0.5rem 0 1.75rem;
+  font-size: 0.9rem;
+  color: var(--ink);
+  transition: color var(--dur-fast) var(--ease-inout);
+}
+.hero__rating strong { font-weight: 600; }
+.hero__rating:hover { color: var(--accent); }
+
+/* Star rating: grey stars with accent stars clipped to --pct on top, so a
+   4.5 rating shows four and a half. */
+.stars {
+  position: relative;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  color: var(--stone-dark);
+}
+.stars::before { content: "★★★★★"; }
+.stars::after {
+  content: "★★★★★";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--pct, 100%);
+  overflow: hidden;
+  color: var(--accent);
+}
+.stars--lg { font-size: 1.5rem; }
+
 /* Short viewports: tighten the copy so the hero stays near one screen. */
 @media (max-height: 700px) {
   .hero { padding-top: calc(var(--nav-h) + 0.75rem); }
   .hero__title { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
   .hero__desc  { margin-bottom: 1.1rem; }
   .stats { gap: 1.1rem; margin-bottom: 1.1rem; }
+  .hero__rating { margin: -0.4rem 0 1rem; }
   .hero__content { padding-bottom: 1rem; }
   .hero__media { min-height: clamp(6rem, 18vh, 20rem); }
 }
@@ -659,6 +698,180 @@ a.contact__val:hover { color: var(--accent); }
 .form .btn:hover { background: var(--accent); }
 .form .btn.is-sent { background: #2D6A4F; }
 .form .btn[disabled] { cursor: default; opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   7b. Client reviews (Google) — summary on the left, three cards on the right;
+       on phones and tablets the cards become a swipeable row
+   -------------------------------------------------------------------------- */
+
+.reviews {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  margin-top: 3rem;
+}
+@media (min-width: 62rem) {
+  .reviews { grid-template-columns: minmax(15rem, 1fr) 3fr; align-items: start; }
+}
+
+.reviews__score {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 5.5rem);
+  font-weight: 300;
+  line-height: 0.9;
+  color: var(--ink);
+}
+.reviews__summary .stars { margin-top: 0.6rem; }
+.reviews__count {
+  margin: 1rem 0 1.5rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.reviews__count strong { font-weight: 600; }
+
+.reviews__places { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--stone); }
+.reviews__places a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 44px;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--stone);
+  transition: color var(--dur-fast) var(--ease-inout);
+}
+.reviews__city {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--ink);
+  transition: color var(--dur-fast) var(--ease-inout);
+}
+.reviews__meta {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.reviews__places a:hover .reviews__city { color: var(--accent); }
+
+.reviews__main { min-width: 0; }
+
+.reviews__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 84%;
+  gap: 1rem;
+  margin: 0;
+  padding: 0 0 0.25rem;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.reviews__list::-webkit-scrollbar { display: none; }
+@media (min-width: 40rem) { .reviews__list { grid-auto-columns: 46%; } }
+@media (min-width: 62rem) {
+  .reviews__list {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+}
+
+.review {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  background: var(--cream);
+  scroll-snap-align: start;
+}
+/* A large, quiet quotation mark in the corner. */
+.review::before {
+  content: "\201C";
+  position: absolute;
+  top: 0.6rem;
+  right: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.35;
+}
+.review__text {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.3vw + 0.9rem, 1.45rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.review__by {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--stone-dark);
+}
+.review__name { font-size: 0.98rem; font-weight: 600; color: var(--ink); }
+.review__src {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* "See other reviews" swaps in the next set. */
+@keyframes review-in {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to   { opacity: 1; transform: none; }
+}
+.review.is-swapped { animation: review-in var(--dur-base) var(--ease-brand) both; }
+.review.is-swapped:nth-child(2) { animation-delay: 80ms; }
+.review.is-swapped:nth-child(3) { animation-delay: 160ms; }
+
+@media (hover: hover) {
+  .reviews .review {
+    transition-property: opacity, transform, scale, box-shadow;
+    transition-duration: var(--dur-slow), var(--dur-slow), var(--dur-base), var(--dur-base);
+    transition-timing-function: var(--ease-brand);
+  }
+  .reviews .review:hover {
+    z-index: 2;
+    scale: 1.03;
+    box-shadow: 0 1.5rem 3rem rgba(16, 24, 32, 0.12);
+  }
+}
+
+.reviews__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  margin-top: 1rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-inout);
+}
+.reviews__more svg { transition: transform var(--dur-base) var(--ease-brand); }
+.reviews__more:hover { color: var(--ink); }
+.reviews__more:hover svg { transform: translateX(0.3em); }
 
 /* --------------------------------------------------------------------------
    8. Product modal — carousel + info
