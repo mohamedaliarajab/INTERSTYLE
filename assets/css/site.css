@@ -201,14 +201,6 @@ body { background: var(--is-white); color: var(--ink); }
 }
 .nav__switch:hover { color: var(--accent); border-color: var(--accent); }
 
-.nav__home {
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-}
-.nav__home:hover { color: var(--accent); }
 
 /* Hamburger — hidden until the links no longer fit. */
 .nav__toggle {
@@ -267,8 +259,7 @@ body { background: var(--is-white); color: var(--ink); }
     flex-direction: column;
     align-items: stretch;
   }
-  .nav__switch, .nav__home { text-align: center; padding: 0.8rem; }
-  .nav__home { border: 1px solid var(--stone); }
+  .nav__switch { text-align: center; padding: 0.8rem; }
 }
 
 @media (min-width: 941px) {
@@ -343,14 +334,6 @@ body { background: var(--is-white); color: var(--ink); }
   background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), var(--surface-dark);
 }
 .footer__copy { font-size: 0.7rem; color: rgba(255, 255, 255, 0.28); }
-.footer__back {
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--on-dark-3);
-  transition: color var(--dur-fast) var(--ease-inout);
-}
-.footer__back:hover { color: var(--on-dark-1); }
 
 /* --------------------------------------------------------------------------
    5. Scroll reveal
@@ -381,7 +364,7 @@ body { background: var(--is-white); color: var(--ink); }
    Square, like the carousel arrows. Sits inside the safe area so it clears
    the iPhone home indicator and the notch in landscape. site.js adds
    `is-visible` once the hero is scrolled past, and sets --to-top-lift so the
-   button rides up above the footer bar instead of covering "Back to Home".
+   button rides up above the footer bar instead of covering the copyright.
    -------------------------------------------------------------------------- */
 
 .to-top {
@@ -489,8 +472,6 @@ body.is-locked .to-top { opacity: 0; visibility: hidden; transform: translateY(0
 .nav--dark:not(.is-scrolled) .nav__link:hover { color: var(--is-white); }
 .nav--dark:not(.is-scrolled) .nav__switch { color: var(--on-dark-2); border-color: var(--on-dark-line); }
 .nav--dark:not(.is-scrolled) .nav__switch:hover { color: var(--is-white); border-color: var(--is-white); }
-.nav--dark:not(.is-scrolled) .nav__home  { color: var(--on-dark-2); }
-.nav--dark:not(.is-scrolled) .nav__home:hover { color: var(--is-white); }
 .nav--dark:not(.is-scrolled) .nav__toggle span { background: var(--is-white); }
 
 /* The Home wordmark artwork is black; flip it while the bar is transparent. */
@@ -508,8 +489,7 @@ body.is-locked .to-top { opacity: 0; visibility: hidden; transform: translateY(0
   /* The bar is solid at this width, so the artwork stays black. */
   .nav--dark:not(.is-scrolled) .nav__logo--home { filter: none; }
   .nav--dark:not(.is-scrolled) .nav__link,
-  .nav--dark:not(.is-scrolled) .nav__switch,
-  .nav--dark:not(.is-scrolled) .nav__home { color: var(--ink); }
+  .nav--dark:not(.is-scrolled) .nav__switch { color: var(--ink); }
   .nav--dark:not(.is-scrolled) .nav__switch { border-color: var(--stone-dark); }
   .nav--dark:not(.is-scrolled) .nav__toggle span { background: var(--ink); }
 }

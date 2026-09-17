@@ -69,7 +69,7 @@
 
   /* ====================================================================== 1b
      Back to top — shows once the hero is behind you, and docks above the
-     footer bar so it never sits on top of "Back to Home"
+     footer bar so it never sits on top of the copyright line
      ====================================================================== */
 
   var toTop = $('[data-to-top]');
