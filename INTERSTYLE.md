@@ -184,7 +184,7 @@ Sonia, ITT Ceramic, Ariston, AstralPool, Gala, Alumácer, Living Ceramics.
 | Abuja | 1145 Aminu Kano Crescent, Wuse 2 | 0813 030 2020 |
 | Ibadan | 2nd Floor, Tafotech Building, MKO Abiola Way, Ring Road | 0803 324 1833 |
 | Port Harcourt | Woji Road, GRA Phase II | 0809 293 4544 |
-| Accra | Spintex Road | +233 23 404 4444 · karam@isc-ng.com |
+| Accra | 33A1 Spintex Road | +233 23 404 4444 · karam@isc-ng.com |
 | Dakar | • 15 Rue Carnot, Dakar 10200 • Route de Ngaparou, Région de Thiès | +221 78 172 63 90 · ibrahim.yazbeck@isc-ng.com |
 
 Dakar's two addresses are marked with small accent dots (`.location__list`).
@@ -359,8 +359,6 @@ content-hashed); images cache for 1 day.
 - [ ] **Directions for Port Harcourt and Ngaparou** land on the area, not the
       door. A Google Maps share link (or street number) from each showroom
       would make them exact.
-- [ ] **Accra address** could read "33A1 Spintex Road" on the cards — that is
-      the address on Interstyle Ghana's own Facebook and Instagram.
 - [ ] **Netlify form email notifications** must be configured after deploy (§7).
 - [ ] **Unused files, safe to delete** (not referenced anywhere):
       `assets/css/inner.css`, `assets/js/parallax.js`,
