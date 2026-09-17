@@ -279,9 +279,12 @@ original was found). "Living Spaces *Designed* to Inspire".
   percentage height there as unknown — the photo kept its own proportions,
   overflowed and showed only the ceiling (fixed 17 Sep, reported on Safari).
 - **Light only:** `color-scheme: only light` in `tokens.css` plus a
-  `<meta name="color-scheme">` on all three pages. Without it Samsung
-  Internet and Chrome on Android auto-darken the site and invert it
-  (verified with Chrome's force-dark: the page stays light).
+  `<meta name="color-scheme">` on all three pages, and a
+  `prefers-color-scheme: dark` block answering with the light palette. This is
+  a complete opt-out of **Chrome for Android's Auto Dark Theme** (verified
+  with Chrome's force-dark: the page stays light). It does **not** stop
+  **Samsung Internet's** forced dark mode, which ignores `color-scheme`
+  altogether — see §10.
 - **Hover zoom:** product and showroom cards scale to 1.045 with a shadow on
   hover (hover-capable devices only), using the CSS `scale` property.
 - **Grid parallax:** the product, brand and showroom grids each move as one
@@ -330,6 +333,11 @@ original was found). "Living Spaces *Designed* to Inspire".
 ---
 
 ## 7. Deploy checklist (Netlify)
+
+**Live at https://interstyleceramics.com.** Verified 17 Sep 2026: all three
+live pages match this folder's current commit (identical `?v=` content
+hashes), so the deployment is up to date and `SITE_URL` in
+`tools/share-preview.py` is correct as it stands.
 
 1. Deploy the folder.
 2. `netlify.toml` serves `/sw.js` with `Cache-Control: no-cache` so returning
@@ -437,10 +445,27 @@ auto-detect an author and refuses to commit. Either run once —
 `GIT_AUTHOR_NAME="Mohamed-Ali Rajab" GIT_AUTHOR_EMAIL="mohamed-alirajab@Mohamed-Alis-MacBook-Pro.local"`
 (plus the matching `GIT_COMMITTER_*`), which is what the history uses.
 
-**Open thread — Android dark mode.** The client reported the site looking
-black in a browser on Samsung/Android. Two opt-outs are now in place
-(`color-scheme: only light` and a `prefers-color-scheme: dark` block that
-answers with the light palette), verified against Chrome's force-dark. Still
-unconfirmed on the real device, and **this folder has never been deployed** —
-so whatever the phone was showing was either an older deployment or this Mac
-over the LAN (`http://192.168.0.109:8420`). Ask which address and browser.
+**Android dark mode — diagnosed 17 Sep 2026.** The phone was on
+**https://interstyleceramics.com** (Netlify). The site *is* deployed — the
+earlier note here that it never had been was wrong — and the live pages match
+this folder exactly, so both opt-outs were already live when the phone showed
+the site black. The cause is the **browser**, not the site:
+
+- **Chrome for Android (Auto Dark Theme)** — fully opted out by
+  `color-scheme: only light` plus the meta tag. Nothing left to do.
+- **Samsung Internet** — its forced dark mode **ignores `color-scheme`, the
+  meta tag and `prefers-color-scheme`**. In the default configuration a
+  website cannot opt out at all. Samsung Internet 24.0.7 added an experimental
+  flag ("Enable Prefer Media Query Over Force Dark", renamed "Enable Adaptive
+  Force Dark" in 25.0) that does respect the meta tag — off by default.
+- **Chrome's `chrome://flags/#enable-force-dark`** — same story: a render-time
+  inversion that overrides site CSS by design.
+
+**The remedy is on the phone**, which is what was done here: Samsung Internet →
+Settings → Labs → *Use website dark theme* (it then uses the site's own light
+design), or switch the browser's dark mode off. Send the client the same step.
+
+No CSS can fix this. The one site-side option left is to **detect** Samsung
+Internet in dark mode and show a small dismissible note telling the visitor how
+to see the site as designed — not built, and a design call, since it puts a
+banner on a marketing page.
