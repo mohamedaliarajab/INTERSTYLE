@@ -265,7 +265,10 @@ original was found). "Living Spaces *Designed* to Inspire".
 - **About carousel** keeps a fixed 3:2 frame at every width (the photos are
   1.38–1.64). It used to stretch to the height of the copy beside it, which
   made it almost square on wide screens and letterboxed below that, changing
-  shape on resize (fixed 17 Sep). It scrolls with the page — no sticky.
+  shape on resize (fixed 17 Sep). It scrolls with the page — no sticky. A row
+  of thumbnails sits under it (`[data-carousel-thumbs]`, built from the slides
+  by `site.js`): click one to jump to that photo, the current one carries the
+  accent border. Any carousel with that box beside it gets thumbnails.
 - **Hero photo** is pinned to its figure with `position: absolute; inset: 0`,
   not `height: 100%`. The figure is sized by `flex`, and Safari treats a
   percentage height there as unknown — the photo kept its own proportions,

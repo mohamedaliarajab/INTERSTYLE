@@ -379,7 +379,37 @@
   }
 
   $$('[data-carousel]').forEach(function (el) {
-    Carousel(el, { interval: parseInt(el.getAttribute('data-interval'), 10) || 0 });
+    // A carousel with a [data-carousel-thumbs] box beside it gets a row of
+    // thumbnails built from its own slides (same files, already loaded).
+    var thumbBox = el.parentNode ? $('[data-carousel-thumbs]', el.parentNode) : null;
+    var thumbs = [];
+
+    var car = Carousel(el, {
+      interval: parseInt(el.getAttribute('data-interval'), 10) || 0,
+      onChange: function (i) {
+        thumbs.forEach(function (b, bi) {
+          b.classList.toggle('is-active', bi === i);
+          b.setAttribute('aria-current', bi === i ? 'true' : 'false');
+        });
+      }
+    });
+
+    if (!thumbBox) return;
+    $$('[data-slide] img', el).forEach(function (img, i) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'about__thumb' + (i === 0 ? ' is-active' : '');
+      button.setAttribute('aria-label', 'Show photo ' + (i + 1));
+      button.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+      var shot = document.createElement('img');
+      shot.src = img.getAttribute('src');
+      shot.alt = '';
+      shot.loading = 'lazy';
+      button.appendChild(shot);
+      button.addEventListener('click', function () { car.go(i); });
+      thumbBox.appendChild(button);
+      thumbs.push(button);
+    });
   });
 
   /* ====================================================================== 4
