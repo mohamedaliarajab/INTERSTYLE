@@ -39,9 +39,21 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
-# The archive of superseded photography lives in the repo for safekeeping and
-# is never served. `force` is required: without it a static file that exists on
-# disk wins over the redirect, and the folder ships inside the publish dir.
+# Working files that ship inside the publish directory but must never be served:
+# the handoff notes, the maintenance scripts and the photo archive. `force` is
+# required — without it a static file that exists on disk wins over a redirect.
+[[redirects]]
+  from = "/INTERSTYLE.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 [[redirects]]
   from = "/archive/*"
   to = "/404.html"
