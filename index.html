@@ -38,8 +38,18 @@
   <link rel="stylesheet" href="/assets/css/preloader.css?v=60bbb9bf">
 
   <!-- Switch the preloader on before first paint, but only where JS runs, so
-       a visitor without JavaScript is never locked behind a static overlay. -->
-  <script>document.documentElement.classList.add('is-preloading');</script>
+       a visitor without JavaScript is never locked behind a static overlay.
+       Once the site has loaded in this visit, coming back here (the brand
+       pages' logos link to this page) skips it. ?holdloader always shows it. -->
+  <script>
+    (function () {
+      var seen = false;
+      try { seen = sessionStorage.getItem('interstyle-loaded') === '1'; } catch (e) {}
+      if (!seen || /[?&]holdloader/.test(location.search)) {
+        document.documentElement.classList.add('is-preloading');
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -122,7 +132,7 @@
 
   </main>
 
-  <script src="/assets/js/preloader.js?v=80af8835"></script>
+  <script src="/assets/js/preloader.js?v=8e4bcbb2"></script>
   <script src="/assets/js/offline.js?v=be85ef2d" defer></script>
   <script src="/assets/js/landing.js?v=c1705c08" defer></script>
 </body>

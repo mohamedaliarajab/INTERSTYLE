@@ -82,7 +82,7 @@ tools/
   version-assets.py    Cache-bust CSS/JS links and stamp sw.js VERSION —
                        run after editing CSS/JS
 
-netlify.toml, robots.txt, .gitignore, README.md (older notes)
+netlify.toml, robots.txt, .gitignore
 ```
 
 ---
@@ -226,7 +226,11 @@ original was found). "Living Spaces *Designed* to Inspire".
   brand pages (logos, carousels, brand marks) so they open instantly. Heroes
   are warmed through the same `srcset`/`sizes` as the pages, so the browser
   fetches exactly the width that screen will use. Hidden without JS. Append
-  `?holdloader=1` to keep it on screen for design work.
+  `?holdloader=1` to keep it on screen for design work. It plays **once per
+  visit**: after it finishes, `sessionStorage` remembers, so returning to the
+  landing page in the same visit skips it (a new tab or visit shows it again).
+- **Header logo** on both brand pages links to the landing page (`/`). The
+  old "← Back" (header) and "← Back to Home" (footer) links were removed.
 - **Hero widths:** `sizes="(orientation: portrait) 160vw, 112vw"` — the
   parallax scales the photo to 112%, and portrait screens crop its sides. A
   phone gets ~170–350KB, a Retina laptop ~0.8–1MB, a 5K/6K display the full
@@ -360,14 +364,9 @@ content-hashed); images cache for 1 day.
       door. A Google Maps share link (or street number) from each showroom
       would make them exact.
 - [ ] **Netlify form email notifications** must be configured after deploy (§7).
-- [ ] **Unused files, safe to delete** (not referenced anywhere):
-      `assets/css/inner.css`, `assets/js/parallax.js`,
-      `assets/img/ambiance/ambiance-1.webp … ambiance-5.jpg`,
-      `assets/img/ambiance/interstyle-ceramics-ambiance.jpg` (~1.6MB total).
 - [ ] **Not verified on real devices:** touch scrolling feel, iOS Safari address
       bar, loader animation, smooth scroll and pointer parallax (the dev preview
       used here doesn't run animation frames). Test in a real browser and phone.
-- [ ] `README.md` predates most of this work; this file supersedes it.
 
 ---
 

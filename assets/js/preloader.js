@@ -17,7 +17,12 @@
   var el = document.querySelector('[data-preloader]');
   if (!el) return;
 
-  root.classList.add('is-preloading');
+  // Already loaded earlier in this visit, so the head script left the loader
+  // off: nothing to wait for, take it out of the page straight away.
+  if (!root.classList.contains('is-preloading')) {
+    if (el.parentNode) el.parentNode.removeChild(el);
+    return;
+  }
 
   var field = el.querySelector('[data-preloader-pixels]');
   var pct   = el.querySelector('[data-preloader-pct]');
@@ -164,6 +169,7 @@
     if (/[?&]holdloader/.test(location.search)) return;
     var wait = Math.max(0, MIN_MS - (Date.now() - started));
     finished = true;
+    try { sessionStorage.setItem('interstyle-loaded', '1'); } catch (e) {}
     setTimeout(function () {
       el.classList.add('is-done');
       root.classList.remove('is-preloading');
