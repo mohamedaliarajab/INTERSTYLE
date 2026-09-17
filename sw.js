@@ -20,7 +20,7 @@
 
 'use strict';
 
-var VERSION = 'c31a9057';
+var VERSION = '2b320e72';
 var CORE  = 'interstyle-core-' + VERSION;   // pages, CSS, JS
 var MEDIA = 'interstyle-media';             // photography and logos
 var FONTS = 'interstyle-fonts';

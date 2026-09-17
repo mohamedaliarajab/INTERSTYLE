@@ -156,8 +156,13 @@
     ['.about__body',                                0.03, 0],
     ['.statboxes',                                  0.07, 0],
     ['.products .product',                          0.035, 0.5],
+    // Product icons drift faster than their card, like the showroom numbers.
+    ['.products .product__ic',                      0.16, 0.35],
     ['.brands .brand',                              0.03, 0.6],
     ['.locations .location',                        0.055, 0.55],
+    // Showroom numbers drift faster than their card, so each card reads in
+    // two planes as the section scrolls past.
+    ['.locations .location__n',                     0.16, 0.35],
     ['.contact__list',                              0.045, 0],
     ['.form',                                       0.03, 0],
     ['.footer__brand',                              0.035, 0],
@@ -262,6 +267,23 @@
       d.addEventListener('click', function () { go(i); restart(); });
     });
 
+    // Touch: a clear sideways swipe changes the photo. Mostly-vertical moves
+    // are left alone so the page (or the pop-up) still scrolls.
+    var touchX = null, touchY = 0;
+    root.addEventListener('touchstart', function (e) {
+      touchX = e.touches.length === 1 ? e.touches[0].clientX : null;
+      if (touchX !== null) touchY = e.touches[0].clientY;
+    }, { passive: true });
+    root.addEventListener('touchend', function (e) {
+      if (touchX === null || slides.length < 2) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      var dy = e.changedTouches[0].clientY - touchY;
+      touchX = null;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      go(dx < 0 ? index + 1 : index - 1);
+      restart();
+    }, { passive: true });
+
     paint();
     restart();
 
@@ -295,14 +317,28 @@
     var mThumbs   = $('[data-modal-thumbs]', modal);
     var mDesc     = $('[data-modal-desc]', modal);
     var mFeatures = $('[data-modal-features]', modal);
+    var mMore     = $('[data-modal-more]', modal);
+    var mRanges   = $('[data-modal-ranges]', modal);
+    var mSpecs    = $('[data-modal-specs]', modal);
     var mEnquire  = $('[data-modal-enquire]', modal);
     var mNote     = $('[data-modal-note]', modal);
     var lastFocus = null;
     var gallery   = null;
 
-    function buildStage(item) {
-      var images = item.images || [];
+    // `shuffle: true` in the data keeps the first photo fixed and mixes the
+    // rest into a new order each time the pop-up opens.
+    function galleryImages(item) {
+      var images = (item.images || []).slice();
+      if (item.shuffle) {
+        for (var i = images.length - 1; i > 1; i--) {
+          var j = 1 + Math.floor(Math.random() * i);
+          var t = images[i]; images[i] = images[j]; images[j] = t;
+        }
+      }
+      return images;
+    }
 
+    function buildStage(item, images) {
       if (!images.length) {
         mStage.innerHTML =
           '<div class="carousel__ph"><span>' + item.title +
@@ -353,6 +389,15 @@
       var car = Carousel(mStage, {
         onChange: function (i) {
           thumbs.forEach(function (t, ti) { t.classList.toggle('is-active', ti === i); });
+          // Keep the active thumbnail in view along the strip (sideways only,
+          // so the pop-up itself never jumps).
+          var active = thumbs[i];
+          if (active && mThumbs.scrollWidth > mThumbs.clientWidth) {
+            var strip = mThumbs.getBoundingClientRect();
+            var box = active.getBoundingClientRect();
+            var target = mThumbs.scrollLeft + (box.left - strip.left) - (strip.width - box.width) / 2;
+            mThumbs.scrollTo({ left: target, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+          }
         }
       });
       thumbs.forEach(function (t, i) {
@@ -369,13 +414,37 @@
 
       mTitle.textContent = item.title;
       mDesc.textContent = item.desc || '';
-      mFeatures.innerHTML = (item.features || []).map(function (f) {
-        return '<li>' + f + '</li>';
+
+      // Optional long-form sections; each stays hidden when a gallery has none.
+      var more = item.more || [];
+      mMore.innerHTML = more.map(function (p) { return '<p>' + p + '</p>'; }).join('');
+      mMore.hidden = !more.length;
+
+      var ranges = item.ranges || [];
+      mRanges.innerHTML = ranges.map(function (r) {
+        return '<li><span class="modal__range-nm">' + r[0] + '</span>' +
+               '<span class="modal__range-tx">' + r[1] + '</span></li>';
       }).join('');
+      mRanges.parentNode.hidden = !ranges.length;
+
+      var features = item.features || [];
+      mFeatures.innerHTML = features.map(function (f) { return '<li>' + f + '</li>'; }).join('');
+      mFeatures.parentNode.hidden = !features.length;
+
+      var specs = item.details || [];
+      mSpecs.innerHTML = specs.map(function (s) {
+        return '<dt>' + s[0] + '</dt><dd>' + s[1] + '</dd>';
+      }).join('');
+      mSpecs.hidden = !specs.length;
+
       mNote.hidden = !!(item.images && item.images.length);
       mEnquire.setAttribute('data-enquiry', item.enquiry || item.title);
 
-      gallery = buildStage(item);
+      gallery = buildStage(item, galleryImages(item));
+
+      // A fresh pop-up always starts at the top of its text.
+      $('.modal__body', modal).scrollTop = 0;
+      $('.modal__info', modal).scrollTop = 0;
 
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');

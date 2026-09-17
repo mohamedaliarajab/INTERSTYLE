@@ -3,11 +3,13 @@
 Append an image to the END of a product gallery on the Interstyle page.
 
     python3 tools/add-image.py floor-wall-tiles "~/Desktop/NEW IMAGES/ADD/mosaic.png"
+    python3 tools/add-image.py stone "/path/photo.webp" --max 2000   (keep more pixels)
 
 Gallery keys: floor-wall-tiles, outdoor-tiles, stone, sanitary-ware,
               adhesives-grouts, tools-accessories
 
-Converts any format to an optimised JPEG (max 1800px), gives it the next free
+Converts any format to an optimised JPEG (long edge max 1800px, or --max N),
+gives it the next free
 number in assets/img/range/<key>/, adds it as the last slide in
 assets/js/products.js, and re-stamps the cache-busting hashes.
 """
@@ -16,7 +18,7 @@ from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-def main(key, src):
+def main(key, src, max_px=1800):
     src = os.path.expanduser(src)
     if not os.path.exists(src): sys.exit(f"not found: {src}")
     folder = ROOT / "assets/img/range" / key
@@ -32,8 +34,8 @@ def main(key, src):
         bg.paste(im, mask=im.getchannel("A")); im = bg
     else:
         im = im.convert("RGB")
-    if max(im.size) > 1800:
-        r = 1800 / max(im.size); im = im.resize((round(im.width*r), round(im.height*r)), Image.LANCZOS)
+    if max(im.size) > max_px:
+        r = max_px / max(im.size); im = im.resize((round(im.width*r), round(im.height*r)), Image.LANCZOS)
     im.save(tmp, "JPEG", quality=84, optimize=True, progressive=True)
     # A content hash in the name means a reused number can never be served
     # from a browser's cache of an image that was deleted earlier.
@@ -54,5 +56,9 @@ def main(key, src):
     print(f"added {out.relative_to(ROOT)} ({im.width}x{im.height}, {out.stat().st_size//1024}KB) as the last slide of {key}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3: sys.exit(__doc__)
-    main(sys.argv[1], sys.argv[2])
+    args = sys.argv[1:]
+    max_px = 1800
+    if "--max" in args:
+        i = args.index("--max"); max_px = int(args[i + 1]); del args[i:i + 2]
+    if len(args) != 2: sys.exit(__doc__)
+    main(args[0], args[1], max_px)

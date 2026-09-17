@@ -463,12 +463,34 @@
   transition: background var(--dur-fast) var(--ease-inout);
 }
 .location:hover { background: var(--surface-dark-raise); }
+
+/* Hover: a showroom or product card lifts toward you. `scale` is its own
+   property, so it stacks on top of the scroll parallax that site.js writes
+   to `transform` instead of fighting it. The selectors outrank site.css's
+   rule that trims parallax layers to an opacity-only transition. */
+@media (hover: hover) {
+  .locations .location[data-inview],
+  .products .product[data-inview] {
+    position: relative;
+    transition-property: opacity, background-color, scale, box-shadow;
+    transition-duration: var(--dur-slow), var(--dur-fast), var(--dur-base), var(--dur-base);
+    transition-timing-function: var(--ease-brand), var(--ease-inout), var(--ease-brand), var(--ease-brand);
+  }
+  .locations .location:hover,
+  .products .product:hover {
+    z-index: 2;
+    scale: 1.045;
+  }
+  .locations .location:hover { box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.45); }
+  .products .product:hover   { box-shadow: 0 1.5rem 3rem rgba(16, 24, 32, 0.28); }
+}
+
 .location__n {
   font-family: var(--font-display);
   font-size: 3rem;
   font-weight: 300;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.08);
+  color: var(--is-grey);                 /* guideline grey: readable, still quiet */
 }
 .location__cy {
   margin-top: 0.4rem;
@@ -653,6 +675,7 @@ a.contact__val:hover { color: var(--accent); }
      small island on large monitors. */
   width: 92vw;
   height: 88vh;
+  height: 88dvh;                 /* iOS: the visible height, not the height behind its toolbars */
   background: var(--is-white);
   overflow: hidden;
   transform: translateY(1.5rem) scale(0.98);
@@ -699,25 +722,46 @@ a.contact__val:hover { color: var(--accent); }
 }
 .modal__close:hover { background: var(--accent); border-color: var(--accent); color: var(--is-white); }
 
+/* Phones (and phones on their side): a full-screen sheet rather than a
+   floating box, so the photography gets every pixel. Safe-area padding keeps
+   the notch and home indicator clear. */
+@media (max-width: 40rem), (max-height: 32rem) {
+  .modal { padding: 0; }
+  .modal__box {
+    width: 100%;
+    height: 100%;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) 0 env(safe-area-inset-left, 0px);
+  }
+  .modal__head { padding-top: 1rem; padding-bottom: 1rem; }
+}
+
 .modal__body {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0, …): a long thumbnail strip used to stretch this column to its
+     full scroll width (860px on a 380px phone), pushing the photo and text
+     off the side. max-content rows: `auto` rows collapsed the gallery to
+     zero height, so the text slid up over the photograph. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: max-content;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 @media (min-width: 52rem) {
   .modal__body {
     grid-template-columns: minmax(0, 1.5fr) minmax(21rem, 1fr);
+    grid-auto-rows: auto;
     overflow: hidden;
   }
-  .modal__info { overflow-y: auto; }
+  .modal__info { overflow-y: auto; overscroll-behavior: contain; }
 }
 
 /* Gallery column: the stage takes every pixel the thumbnails don't. */
 .modal__gallery {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 0;
   background: var(--stone);
 }
@@ -728,10 +772,13 @@ a.contact__val:hover { color: var(--accent); }
      zero height on phones, which hid the gallery entirely. */
   flex: none;
   aspect-ratio: 4 / 3;
+  max-height: 62vh;              /* phones on their side: leave room for the thumbnails */
+  max-height: 62dvh;
   background: var(--stone);
+  touch-action: pan-y;           /* horizontal swipes change the photo (site.js) */
 }
 @media (min-width: 52rem) {
-  .modal__stage { flex: 1 1 auto; aspect-ratio: auto; min-height: 0; }
+  .modal__stage { flex: 1 1 auto; aspect-ratio: auto; min-height: 0; max-height: none; }
 }
 
 .modal__thumbs {
@@ -759,7 +806,9 @@ a.contact__val:hover { color: var(--accent); }
 .modal__info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: clamp(1.25rem, 3vw, 2rem);
+  padding-bottom: 0;             /* the sticky enquiry bar supplies the bottom edge */
   border-left: 1px solid var(--stone);
 }
 @media (max-width: 51.99rem) { .modal__info { border-left: 0; border-top: 1px solid var(--stone); } }
@@ -796,7 +845,77 @@ a.contact__val:hover { color: var(--accent); }
   width: 5px; height: 5px;
   background: var(--accent);
 }
-.modal__foot { margin-top: auto; }
+/* Longer write-ups: supporting paragraphs, the named ranges, and a short
+   details table (finishes, spaces, brands). */
+.modal__more { margin: -0.5rem 0 1.75rem; }
+.modal__more p {
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--ink);
+}
+.modal__more p:last-child { margin-bottom: 0; }
+
+.modal__ranges {
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--stone);
+}
+.modal__ranges li {
+  padding: 0.9rem 0 0.95rem;
+  border-bottom: 1px solid var(--stone);
+}
+.modal__range-nm {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.modal__range-tx {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.modal__specs {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.75rem 1.25rem;
+  margin: 0 0 2rem;
+}
+.modal__specs dt {
+  padding-top: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.modal__specs dd { margin: 0; font-size: 0.98rem; line-height: 1.6; color: var(--ink); }
+@media (max-width: 26rem) {
+  .modal__specs { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+  .modal__specs dd { margin-bottom: 0.8rem; }
+}
+
+/* The enquiry button stays in reach while the write-up scrolls beneath it. */
+.modal__foot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: auto;
+  padding: 1rem 0 calc(1rem + env(safe-area-inset-bottom, 0px));
+  background: var(--is-white);
+  border-top: 1px solid var(--stone);
+}
+@media (max-width: 51.99rem) {
+  .modal__foot .btn { width: 100%; justify-content: center; }
+}
 .modal__note {
   margin: 0.9rem 0 0;
   font-size: 0.72rem;

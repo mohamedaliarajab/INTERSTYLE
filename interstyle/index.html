@@ -29,9 +29,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/assets/css/tokens.css?v=260dbcfd">
-  <link rel="stylesheet" href="/assets/css/base.css?v=59474aff">
-  <link rel="stylesheet" href="/assets/css/site.css?v=7d71f4fb">
-  <link rel="stylesheet" href="/assets/css/brand-page.css?v=55b6798d">
+  <link rel="stylesheet" href="/assets/css/base.css?v=7f4f8e27">
+  <link rel="stylesheet" href="/assets/css/site.css?v=affaaa89">
+  <link rel="stylesheet" href="/assets/css/brand-page.css?v=e1d4a96c">
 </head>
 
 <body>
@@ -532,8 +532,19 @@
 
       <div class="modal__info">
         <p class="modal__desc" data-modal-desc></p>
-        <h3 class="modal__sub">Range Includes</h3>
-        <ul class="modal__features" data-modal-features></ul>
+        <div class="modal__more" data-modal-more hidden></div>
+
+        <div data-modal-ranges-wrap hidden>
+          <h3 class="modal__sub">The Ranges</h3>
+          <ul class="modal__ranges" data-modal-ranges></ul>
+        </div>
+
+        <div data-modal-features-wrap>
+          <h3 class="modal__sub">Range Includes</h3>
+          <ul class="modal__features" data-modal-features></ul>
+        </div>
+
+        <dl class="modal__specs" data-modal-specs hidden></dl>
 
         <div class="modal__foot">
           <a class="btn" href="#contact" data-modal-enquire>
@@ -550,8 +561,8 @@
   </div>
 </div>
 
-<script src="/assets/js/products.js?v=e095b6e2"></script>
+<script src="/assets/js/products.js?v=84b62ea2"></script>
 <script src="/assets/js/offline.js?v=be85ef2d" defer></script>
-<script src="/assets/js/site.js?v=a3071a23" defer></script>
+<script src="/assets/js/site.js?v=c24016b4" defer></script>
 </body>
 </html>

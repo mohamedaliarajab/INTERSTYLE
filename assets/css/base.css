@@ -26,6 +26,10 @@ img { display: block; max-width: 100%; height: auto; }
 
 a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 
+/* `hidden` must win over any display value set by a component class
+   (e.g. the pop-up's flex thumbnail strip). */
+[hidden] { display: none !important; }
+
 /* Visible focus only for keyboard users, never swallowed by custom styling. */
 :focus-visible {
   outline: 2px solid var(--is-orange);

@@ -100,6 +100,9 @@ From *Interstyle Brandstyle Guideline 21* (`~/Desktop/Milan Interstyle/Branding/
 
 **Typography**
 - **Montserrat** — all UI and body text (guideline: "digital media" face).
+- Section eyebrows ("WHAT WE OFFER") are 0.8rem with a 3rem rule; the nav
+  Interstyle wordmark is `clamp(1.875rem, 2.75vw, 2.5rem)` tall (25% up on
+  the original). Showroom numbers use guideline grey `#898A8D`.
 - **Cormorant Garamond** — display headlines. *Not in the guideline*; kept from
   the reference site the client supplied. To go all-Montserrat, set
   `--font-display: var(--font-brand)` in `tokens.css`.
@@ -131,18 +134,26 @@ point `center 68%`. Headline "Premium Surfaces for *Exceptional* Spaces".
 |---|---|---|---|
 | 1 | `floor-wall-tiles` | Floor & Wall Tiles | 8 |
 | 2 | `outdoor-tiles` | Outdoor Tiles & Pool Mosaics | 9 |
-| 3 | `stone` | Stones | 7 |
+| 3 | `stone` | Stones | 11 |
 | 4 | `sanitary-ware` | Sanitary Ware | 13 |
 | 5 | `adhesives-grouts` | Tile Adhesives & Grouts | 5 |
 | 6 | `tools-accessories` | Tools & Accessories | 10 |
 
 Tools & Accessories order: RUBI cutting/handling tools → levelling wedges &
 spacers → profiles → switches.
-Sanitary Ware order: basins, toilets, furniture and showers first, with the
-dark rain-shower panel (`01.jpg`) in the middle (slide 7 of 13); bathtubs
-(`04`, `11`) and the glass shower enclosure (`03`) come last.
+Sanitary Ware: the vanity with two basins and an oval mirror (`06.jpg`) is
+always first; `shuffle: true` puts the other 12 in a new order on every open.
 Stones copy was written from stonewrap.com **without naming that brand** — keep
-it unbranded. No technical specs are claimed (the source gives none).
+it unbranded. No technical specs are claimed (the source gives none). Slides
+8–11 were added 17 Sep 2026 from Stonewrap's own gallery (lounge wall, brick
+fireplace, villa with pool, mountain house), kept at their full 1800–2000px;
+originals are in `NEW IMAGES/Stone Tiles/`.
+
+**Pop-up write-ups:** all six Interstyle pop-ups have a lead paragraph, extra
+paragraphs (`more`), named **ranges** (`[name, text]`) and a details table
+(`details`: finishes, spaces, brands). Brands named there are only ones already
+in the site's brand list. Home collections still use the simpler `features`
+bullets.
 
 **Stats:** hero 6+ Branches · 3 Countries · 20+ Brands · 12+ Years. About:
 4 Branches in Nigeria · 3 Countries · 20+ Premium Brands · 12+ Years. The About
@@ -220,10 +231,19 @@ original was found). "Living Spaces *Designed* to Inspire".
   the same photo. The contact form says "You are offline…" instead of failing
   silently. Verified in headless Chrome with the server stopped and the
   internet blocked: all pages, galleries, fonts and images load.
-- **Parallax:** scroll parallax on ~53 layers per brand page (auto-assigned by
+- **Hover zoom:** product and showroom cards scale to 1.045 with a shadow on
+  hover (hover-capable devices only). It uses the CSS `scale` property so it
+  stacks with the scroll parallax on `transform`. Product icons and showroom
+  numbers are their own faster parallax layers.
+- **Parallax:** scroll parallax on 63 layers (Interstyle) and 44 (Home) (auto-assigned by
   selector in `site.js`); pointer parallax on the landing. Off under
   `prefers-reduced-motion`.
-- **Gallery pop-up:** 92vw × 88vh. Missing image files show an
+- **Gallery pop-up:** 92vw × 88dvh; on phones (≤40rem wide, or ≤32rem tall
+  in landscape) it becomes a full-screen sheet inside the safe area. Photos
+  change by arrows, dots, thumbnails, keyboard or a sideways swipe; the
+  active thumbnail scrolls into view. The Enquire button is sticky at the
+  bottom while the write-up scrolls. (Fixed 17 Sep: on phones the thumbnail
+  strip used to stretch the layout to ~860px and the text sat over the photo.) Missing image files show an
   "Image awaiting upload" placeholder, and `.jpg` paths auto-retry
   `.jpeg/.png/.webp` — nothing ever renders as a broken image.
 - **Footer year** is 2026 in the markup and kept current by `site.js`
@@ -275,10 +295,11 @@ content-hashed); images cache for 1 day.
 | Task | How |
 |---|---|
 | Replace a hero photo | Get the biggest master you can (ideally 6000–7200px — upscale in Topaz Gigapixel or Photoshop), then `python3 tools/hero-image.py interstyle "/path/master.png"` (or `home`), then `share-preview.py` (the previews use the hero) and `version-assets.py`. Old widths move to the archive |
-| Add a photo to a gallery | Save it anywhere, then `python3 tools/add-image.py <key> "/path/to/file"` — appends as the last slide |
+| Add a photo to a gallery | Save it anywhere, then `python3 tools/add-image.py <key> "/path/to/file"` — appends as the last slide (long edge 1800px; add `--max 2000` to keep more) |
 | Remove a gallery photo | Delete its path from `products.js` / `products-home.js` and delete the file |
 | Reorder a gallery | Reorder the `images` array in the data file |
-| Change gallery copy/bullets | Edit `title`, `desc`, `features` in the data file |
+| Change gallery copy | Edit `desc`, `more`, `ranges`, `details` (or `features`) in the data file; any section left out is hidden |
+| Fix a gallery's first photo, shuffle the rest | Put that image first in `images` and add `shuffle: true` |
 | Change the site's web address | Edit `SITE_URL` in `tools/share-preview.py`, run it, redeploy |
 | Add or move a showroom | Copy a `.location` card; build its link as `https://www.google.com/maps/dir/?api=1&destination=<URL-encoded address>`, adding `&destination_place_id=<id>` when the business has a Google listing (write each `&` as `&amp;` in the HTML) |
 | Rename a product | Update **4 places**: card `.product__nm`, data-file `title` + `enquiry`, form `<option>`, footer link |
