@@ -125,6 +125,9 @@
     });
   }
 
+  // Footer copyright year: 2026 is in the markup; keep it current from here on.
+  $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+
   // Brand logos: a missing file degrades to the brand name.
   markMissing($$('.brand img'), function (img) {
     img.parentNode.classList.add('is-missing');

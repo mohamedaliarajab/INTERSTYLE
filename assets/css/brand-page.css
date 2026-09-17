@@ -949,6 +949,34 @@ body.is-locked { overflow: hidden; }
 .location__ad + .location__ad { margin-top: -0.45rem; }
 .location__ph { word-break: break-word; }
 
+/* "Get directions" — the card's call to action, so it takes the accent and
+   the small uppercase voice of the eyebrows rather than the contact style. */
+.location__map {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: color var(--dur-fast) var(--ease-inout);
+}
+.location__map + .location__map { margin-top: 0; }
+.location__map svg {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  transition: transform var(--dur-base) var(--ease-brand);
+}
+.location__map:hover { color: var(--is-white); }
+.location__map:hover svg { transform: translateY(-0.15rem); }
+@media (pointer: coarse) { .location__map { min-height: 44px; } }
+
 /* Showrooms with more than one address: each marked with a small accent dot
    (orange on Interstyle, gold on Interstyle Home). */
 .location__list {
