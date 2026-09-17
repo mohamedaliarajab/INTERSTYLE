@@ -262,6 +262,14 @@ original was found). "Living Spaces *Designed* to Inspire".
   the same photo. The contact form says "You are offline…" instead of failing
   silently. Verified in headless Chrome with the server stopped and the
   internet blocked: all pages, galleries, fonts and images load.
+- **Hero photo** is pinned to its figure with `position: absolute; inset: 0`,
+  not `height: 100%`. The figure is sized by `flex`, and Safari treats a
+  percentage height there as unknown — the photo kept its own proportions,
+  overflowed and showed only the ceiling (fixed 17 Sep, reported on Safari).
+- **Light only:** `color-scheme: only light` in `tokens.css` plus a
+  `<meta name="color-scheme">` on all three pages. Without it Samsung
+  Internet and Chrome on Android auto-darken the site and invert it
+  (verified with Chrome's force-dark: the page stays light).
 - **Hover zoom:** product and showroom cards scale to 1.045 with a shadow on
   hover (hover-capable devices only), using the CSS `scale` property.
 - **Grid parallax:** the product, brand and showroom grids each move as one

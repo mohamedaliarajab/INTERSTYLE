@@ -4,6 +4,10 @@
    ========================================================================== */
 
 :root {
+  /* The site is designed light. Without this, Samsung Internet and Chrome on
+     Android apply their own dark filter and invert the photography and type. */
+  color-scheme: only light;
+
   /* --- Brand palette (exact guideline values) ------------------------------ */
   --is-black:  #101820;   /* R16  G24  B32   — primary, cool black          */
   --is-grey:   #898A8D;   /* R137 G138 B141  — neutral, digital legibility  */

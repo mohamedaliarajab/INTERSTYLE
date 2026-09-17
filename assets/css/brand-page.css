@@ -133,6 +133,13 @@
   background: var(--stone);
 }
 .hero__media img {
+  /* Pinned to the figure rather than sized with height: 100%. The figure gets
+     its height from `flex`, and Safari treats a percentage height inside a
+     flexed box as unknown — the photo fell back to its own proportions,
+     overflowed, and showed only its top (the ceiling). Absolute sizing is
+     resolved from the figure's box in every browser. */
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
