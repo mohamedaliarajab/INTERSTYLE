@@ -127,7 +127,10 @@ weight in pop-ups (Light weight read as grey on screen).
 of `NEW IMAGES/Hero.png` (master kept in `NEW IMAGES/HERO UPSCALED/`). Focal
 point `center 68%`. Headline "Premium Surfaces for *Exceptional* Spaces".
 
-**About carousel:** 5 slides — `ambiance/carousel-1..5.jpg`.
+**About carousel:** 10 slides — `ambiance/carousel-1..10.jpg`. Slides 6–10
+were added 17 Sep 2026 from **ecoceramic.es** (a partner brand): pool terrace,
+pearl bathroom, stone-basin bathroom, open-plan living, kitchen — downloaded at
+2133–2560px and saved at 2000px wide; originals in `NEW IMAGES/Carousel/`.
 
 **Product range — in this order:**
 
@@ -268,7 +271,9 @@ original was found). "Living Spaces *Designed* to Inspire".
   shape on resize (fixed 17 Sep). It scrolls with the page — no sticky. A row
   of thumbnails sits under it (`[data-carousel-thumbs]`, built from the slides
   by `site.js`): click one to jump to that photo, the current one carries the
-  accent border. Any carousel with that box beside it gets thumbnails.
+  accent border. Up to six thumbnails stay in one row; more split into two
+  (Interstyle's ten read as 5 + 5, Home's six as one row). Any carousel with
+  that box beside it gets thumbnails.
 - **Hero photo** is pinned to its figure with `position: absolute; inset: 0`,
   not `height: 100%`. The figure is sized by `flex`, and Safari treats a
   percentage height there as unknown — the photo kept its own proportions,

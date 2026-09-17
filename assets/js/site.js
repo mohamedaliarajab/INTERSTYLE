@@ -410,6 +410,9 @@
       thumbBox.appendChild(button);
       thumbs.push(button);
     });
+
+    // Up to six thumbnails sit in one row; more than that split into two.
+    thumbBox.style.setProperty('--thumb-cols', thumbs.length > 6 ? Math.ceil(thumbs.length / 2) : thumbs.length);
   });
 
   /* ====================================================================== 4

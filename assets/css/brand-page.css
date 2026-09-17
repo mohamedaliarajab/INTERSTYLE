@@ -240,8 +240,9 @@
    picture leaves beside the longer copy column. */
 .about__thumbs {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
+  /* site.js sets the column count: one row up to six thumbnails, two rows
+     beyond that (ten photos on Interstyle read as 5 + 5). */
+  grid-template-columns: repeat(var(--thumb-cols, 5), minmax(0, 1fr));
   gap: 6px;
   margin-top: 6px;
 }
