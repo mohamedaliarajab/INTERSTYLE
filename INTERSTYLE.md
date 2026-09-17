@@ -465,7 +465,7 @@ the site black. The cause is the **browser**, not the site:
 Settings → Labs → *Use website dark theme* (it then uses the site's own light
 design), or switch the browser's dark mode off. Send the client the same step.
 
-No CSS can fix this. The one site-side option left is to **detect** Samsung
-Internet in dark mode and show a small dismissible note telling the visitor how
-to see the site as designed — not built, and a design call, since it puts a
-banner on a marketing page.
+No CSS can fix this. Detecting Samsung Internet in dark mode and showing the
+visitor a dismissible note was considered and **declined 17 Sep 2026** — a
+banner on a marketing page is not worth it. The client is briefed instead.
+Don't reopen this unless Samsung changes the default.
