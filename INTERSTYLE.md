@@ -189,7 +189,7 @@ to the Interstyle Ceramics listings).
 
 **Brands (20):** Porcelanosa, RAK Ceramics, Ecoceramic, Epsilon Tile,
 Portobello, Kohler, Hansgrohe, Kludi, Geberit, Noken, Laticrete, Legrand, Rubi,
-Sonia, ITT Ceramic, Ariston, AstralPool, Gala, Alumácer, Living Ceramics.
+Sonia, STN Ceramica, Ariston, AstralPool, Gala, Alumácer, Living Ceramics.
 
 **Showrooms (6):**
 

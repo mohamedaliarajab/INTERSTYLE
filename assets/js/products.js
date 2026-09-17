@@ -34,7 +34,7 @@ window.INTERSTYLE_PRODUCTS = {
     details: [
       ['Finishes', 'Matt, satin, polished, lappato and structured'],
       ['Spaces', 'Living areas, kitchens, bathrooms, offices, retail and hospitality'],
-      ['Brands', 'Porcelanosa, RAK Ceramics, Portobello, Ecoceramic, ITT Ceramic, Living Ceramics, Epsilon Tile']
+      ['Brands', 'Porcelanosa, RAK Ceramics, Portobello, Ecoceramic, STN Ceramica, Living Ceramics, Epsilon Tile']
     ],
     images: [
       '/assets/img/range/floor-wall-tiles/03.jpg',

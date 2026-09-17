@@ -92,7 +92,7 @@
     '/assets/img/brands/gala.png',
     '/assets/img/brands/geberit.png',
     '/assets/img/brands/hansgrohe.png',
-    '/assets/img/brands/itt-ceramic.png',
+    '/assets/img/brands/stn-ceramica.png',
     '/assets/img/brands/kludi.png',
     '/assets/img/brands/kohler.png',
     '/assets/img/brands/laticrete.png',
