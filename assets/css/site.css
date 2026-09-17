@@ -333,7 +333,8 @@ body { background: var(--is-white); color: var(--ink); }
      the dark surface beneath it or it reads as mid-grey. */
   background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), var(--surface-dark);
 }
-.footer__copy { font-size: 0.7rem; color: rgba(255, 255, 255, 0.28); }
+/* Quiet but readable: ~7:1 against the footer bar (it was 0.28 white, ~2.4:1). */
+.footer__copy { font-size: 0.78rem; letter-spacing: 0.02em; color: rgba(255, 255, 255, 0.62); }
 
 /* --------------------------------------------------------------------------
    5. Scroll reveal
