@@ -141,7 +141,6 @@ window.INTERSTYLE_PRODUCTS = {
     shuffle: true,
     images: [
       '/assets/img/range/sanitary-ware/06.jpg',
-      '/assets/img/range/sanitary-ware/05.jpg',
       '/assets/img/range/sanitary-ware/07.jpg',
       '/assets/img/range/sanitary-ware/08.jpg',
       '/assets/img/range/sanitary-ware/09.jpg',
@@ -155,7 +154,8 @@ window.INTERSTYLE_PRODUCTS = {
       '/assets/img/range/sanitary-ware/03.jpg',
       '/assets/img/range/sanitary-ware/15-3ad6dd.jpg',
       '/assets/img/range/sanitary-ware/16-fa5bc6.jpg',
-      '/assets/img/range/sanitary-ware/17-0ea8b5.jpg'
+      '/assets/img/range/sanitary-ware/17-0ea8b5.jpg',
+      '/assets/img/range/sanitary-ware/18-3ace5a.jpg'
     ]
   },
 

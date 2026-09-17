@@ -143,6 +143,10 @@ Tools & Accessories order: RUBI cutting/handling tools → levelling wedges &
 spacers → profiles → switches.
 Sanitary Ware: the vanity with two basins and an oval mirror (`06.jpg`) is
 always first; `shuffle: true` puts the other 15 in a new order on every open.
+The old basin-mounting diagram collage (`05.jpg`) was replaced on 17 Sep by
+an arrangement of coloured countertop basins (`18-3ace5a.jpg`, 2040×1031,
+source `NEW IMAGES/Sanitary Ware/basins-collection.png`); the collage is in
+`~/Desktop/interstyle-web-archive/removed-2026-09-17/`.
 Slides 15–17 are Ariston water-heater lifestyle shots (bathroom, timber
 kitchen, under-counter) from ariston.com, 1200×1200 — the largest Ariston
 publishes; originals in `NEW IMAGES/Sanitary Ware/`. Sanitary Ware lists a
