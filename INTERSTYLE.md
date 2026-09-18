@@ -101,9 +101,20 @@ From *Interstyle Brandstyle Guideline 21* (`~/Desktop/Milan Interstyle/Branding/
 
 **Typography**
 - **Montserrat** — all UI and body text (guideline: "digital media" face).
-- Section eyebrows ("WHAT WE OFFER") are 0.8rem with a 3rem rule; the nav
-  Interstyle wordmark is `clamp(1.875rem, 2.75vw, 2.5rem)` tall (25% up on
-  the original). Showroom numbers use guideline grey `#898A8D`.
+- Section eyebrows ("WHAT WE OFFER") are 0.8rem with a 3rem rule. Showroom
+  numbers use guideline grey `#898A8D`.
+- **Nav marks (18 Sep 2026):** the Interstyle wordmark is
+  `clamp(2.0625rem, 3.025vw, 2.75rem)` and Home's mark
+  `clamp(3.25rem, 5.25vw, 4.6875rem)` — 10% and 25% up on the sizes before.
+  The bar is `--nav-h: clamp(4rem, 7vw, 5.25rem)`, so Home's mark now runs
+  close to the bar height (75px inside 84px at 1440px, 4.5px clear top and
+  bottom). Going higher means raising `--nav-h` too.
+- **Nav links** are 0.8rem (0.86rem in the stacked mobile menu) and the brand
+  switch 0.73rem — all ~11% up, made 18 Sep 2026. Mobile tap targets stay
+  above 44px (measured 45.8px).
+- **Hero eyebrows were removed** from both brand pages on 18 Sep 2026: the
+  hero now opens on the headline. The section eyebrows ("About Us", "What We
+  Offer" and the rest) are untouched.
 - **Cormorant Garamond** — display headlines. *Not in the guideline*; kept from
   the reference site the client supplied. To go all-Montserrat, set
   `--font-display: var(--font-brand)` in `tokens.css`.
