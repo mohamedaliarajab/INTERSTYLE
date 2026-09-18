@@ -231,25 +231,38 @@ General email: **info@isc-ng.com**.
 
 ### Interstyle Home (`/home/`)
 
-**Hero (replaced 18 Sep 2026):** `home/hero-showroom-51bba1-<width>.jpg` —
-1280 / 1920 / 2584px. A real photograph of **the Interstyle Home showroom
-itself** (client-supplied, 2584×1938, 4:3), replacing the Febal Casa stock
-showroom that was a 4× Photoshop upscale of an 1800px file. The master is kept
-at `archive/masters/hero-home-showroom-2584px.jpeg` — the only copy.
-"Living Spaces *Designed* to Inspire".
-Two consequences of the swap, both accepted deliberately:
-- **The ladder stops at 2584px** instead of 7200px. `hero-image.py` never
-  upscales, so a 5K display now gets 2584px where it used to get 7200px. It is
-  a genuine photo rather than an AI upscale, so it reads cleaner at ordinary
-  sizes even though the pixel count is lower.
-- **It is a heavier file** — 437KB at 1280px against the old 170KB. The photo
-  is 4:3 (more pixels per width) and full of foliage, which compresses badly,
-  and `hero-image.py` encodes at quality 85 with no chroma subsampling.
-  Turning 4:2:0 subsampling on would give 353KB, and quality 82 with it 324KB,
-  with no visible loss at this size — not done, because the tool's setting is
-  deliberate and applies to both heroes.
-No focal point is set: the default centre crop frames the building and keeps
-the partner signage in shot at desktop and phone widths alike.
+**Hero (replaced 18 Sep 2026):** `home/hero-showroom-ca363f-<width>.jpg` —
+1280 / 1962px. A real photograph of **the Interstyle Home showroom itself**,
+replacing the Febal Casa stock showroom (which was a 4× Photoshop upscale of an
+1800px file). "Living Spaces *Designed* to Inspire".
+
+**How this crop was made.** The client supplied a 2584×1938 wide shot, then a
+zoomed-in version of the same photo — but the zoom had been done by cropping a
+smaller export, so it arrived at only 1280×960, half the width. Rather than cap
+the hero at 1280px, the same framing was cut straight out of the 2584px master:
+crop **(228, 168) 1962×1470**, which is 76% of the master's width and matched
+to the client's version by search (best mean-squared error). That yields
+1962px, 53% more pixels than their file, with no upscaling and no second JPEG
+generation — the crop was passed to `hero-image.py` as a lossless PNG.
+
+Both source files are in `archive/masters/`, the only copies:
+`hero-home-showroom-2584px.jpeg` (the full master — recrop from this) and
+`hero-home-client-crop-1280px.jpg` (the client's framing reference).
+
+Worth knowing:
+- **The ladder stops at 1962px** (7200px before the swap). `hero-image.py`
+  never upscales. To go wider, either loosen the crop or get a larger original.
+- **The hero band crops hard on desktop.** It is about 2.6:1 there against the
+  photo's 4:3, so roughly half the height is cut and the centred band lands on
+  the building's facade — the driveway approach mostly falls outside it. On a
+  phone the band is near-square (1.06:1) and the whole approach stays in shot.
+  No `object-position` is set; adding one (e.g. `center 60%`) would pull more
+  of the driveway back into the desktop band.
+- **File weight:** 0.38MB at 1280px, 0.75MB at 1962px. `hero-image.py` encodes
+  at quality 85 with no chroma subsampling; turning 4:2:0 on would cut roughly
+  a fifth, with no visible loss at these sizes — not done, because that setting
+  is deliberate and shared with the Interstyle hero.
+
 **About carousel:** 6 slides — `home/about-1..6.jpg`. Stats: 3 Countries · 4+ Brands · 100% Curated.
 
 **Collections:**
