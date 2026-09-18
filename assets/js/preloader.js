@@ -118,7 +118,7 @@
   var HERO_SIZES = '(orientation: portrait) 160vw, 112vw';
   var HEROES = [
     { page: 'interstyle', srcset: '/assets/img/ambiance/hero-bathroom-9eeba7-1280.jpg 1280w, /assets/img/ambiance/hero-bathroom-9eeba7-1920.jpg 1920w, /assets/img/ambiance/hero-bathroom-9eeba7-2560.jpg 2560w, /assets/img/ambiance/hero-bathroom-9eeba7-3480.jpg 3480w, /assets/img/ambiance/hero-bathroom-9eeba7-4800.jpg 4800w, /assets/img/ambiance/hero-bathroom-9eeba7-6408.jpg 6408w' },
-    { page: 'home', srcset: '/assets/img/home/hero-showroom-3a89ab-1280.jpg 1280w, /assets/img/home/hero-showroom-3a89ab-1920.jpg 1920w, /assets/img/home/hero-showroom-3a89ab-2560.jpg 2560w, /assets/img/home/hero-showroom-3a89ab-3480.jpg 3480w, /assets/img/home/hero-showroom-3a89ab-4800.jpg 4800w, /assets/img/home/hero-showroom-3a89ab-7200.jpg 7200w' }
+    { page: 'home', srcset: '/assets/img/home/hero-showroom-51bba1-1280.jpg 1280w, /assets/img/home/hero-showroom-51bba1-1920.jpg 1920w, /assets/img/home/hero-showroom-51bba1-2584.jpg 2584w' }
   ];
 
   var total    = ASSETS.length + HEROES.length + 1;   // + the document's own load event

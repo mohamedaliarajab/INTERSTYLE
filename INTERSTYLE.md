@@ -231,9 +231,25 @@ General email: **info@isc-ng.com**.
 
 ### Interstyle Home (`/home/`)
 
-**Hero:** `home/hero-showroom-3a89ab-<width>.jpg` — 1280 … 7200px, a 4×
-Photoshop upscale of the old 1800px `hero.jpg` (Febal Casa showroom; no larger
-original was found). "Living Spaces *Designed* to Inspire".
+**Hero (replaced 18 Sep 2026):** `home/hero-showroom-51bba1-<width>.jpg` —
+1280 / 1920 / 2584px. A real photograph of **the Interstyle Home showroom
+itself** (client-supplied, 2584×1938, 4:3), replacing the Febal Casa stock
+showroom that was a 4× Photoshop upscale of an 1800px file. The master is kept
+at `archive/masters/hero-home-showroom-2584px.jpeg` — the only copy.
+"Living Spaces *Designed* to Inspire".
+Two consequences of the swap, both accepted deliberately:
+- **The ladder stops at 2584px** instead of 7200px. `hero-image.py` never
+  upscales, so a 5K display now gets 2584px where it used to get 7200px. It is
+  a genuine photo rather than an AI upscale, so it reads cleaner at ordinary
+  sizes even though the pixel count is lower.
+- **It is a heavier file** — 437KB at 1280px against the old 170KB. The photo
+  is 4:3 (more pixels per width) and full of foliage, which compresses badly,
+  and `hero-image.py` encodes at quality 85 with no chroma subsampling.
+  Turning 4:2:0 subsampling on would give 353KB, and quality 82 with it 324KB,
+  with no visible loss at this size — not done, because the tool's setting is
+  deliberate and applies to both heroes.
+No focal point is set: the default centre crop frames the building and keeps
+the partner signage in shot at desktop and phone widths alike.
 **About carousel:** 6 slides — `home/about-1..6.jpg`. Stats: 3 Countries · 4+ Brands · 100% Curated.
 
 **Collections:**
@@ -414,13 +430,14 @@ content-hashed); images cache for 1 day.
 ## 9. Open items
 
 - [ ] **Soft Furnishings** (Home) has no photos — shows placeholder.
-- [ ] **Hero sharpness:** both heroes are Photoshop AI upscales. Topaz
-      Gigapixel (installed, but its CLI needs an enterprise licence) gives a
-      cleaner result, especially on the Home hero, which started at only
-      1800px. **The masters were deleted with `NEW IMAGES`**, so this now means
-      going back to the client for the original photograph — for Home, the
-      Febal Casa showroom shot — and re-running `tools/hero-image.py`. The
-      deployed widths are unaffected and stay as they are until then.
+- [ ] **Hero sharpness (Interstyle only now):** the Interstyle hero is still a
+      Photoshop AI upscale. Topaz Gigapixel (installed, but its CLI needs an
+      enterprise licence) would give a cleaner result, and **the master was
+      deleted with `NEW IMAGES`**, so it means asking the client for the
+      original photograph again and re-running `tools/hero-image.py`. The
+      deployed widths are unaffected until then. **Home is no longer an
+      upscale** — it is the client's own photo of the showroom (§5), capped at
+      2584px because that is the master's true size.
 - [ ] **iPhone offline limit:** Safari deletes a site's saved data after about
       7 days without a visit (unless it was added to the Home Screen), so
       offline browsing on iPhone lasts a week from the last visit.
